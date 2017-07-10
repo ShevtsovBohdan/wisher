@@ -40,6 +40,7 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
+<<<<<<< HEAD
 
         <!-- Optional, for bootstrap -->
         <dependency>
@@ -47,6 +48,8 @@
             <artifactId>bootstrap</artifactId>
             <version>3.3.7</version>
         </dependency>
+=======
+>>>>>>> 26cb6b776afbe1fca7cb4857d44e31b2d0f80834
     </dependencies>
 
     <properties>
