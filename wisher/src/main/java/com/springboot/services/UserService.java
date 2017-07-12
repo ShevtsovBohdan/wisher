@@ -20,8 +20,7 @@ public class UserService implements UserDetailsService{
     @Autowired
     private User user;
 
-    @Autowired
-    private ManageUser manageUser;
+    private ManageUser manageUser = new ManageUser();
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

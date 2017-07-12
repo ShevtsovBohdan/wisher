@@ -2,49 +2,55 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <title>ddd</title>
 </head>
 <body>
 <div class="container">
     <div class="row">
         <!--<div class="col-md-6 col-md-offset-3">-->
-            <div class="panel panel-default" style="margin-top:45px">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Login with Username and Password</h3>
-                </div>
-                <div class="panel-body">
+        <div class="panel panel-default" style="margin-top:45px">
+            <div class="panel-heading">
+                <h3 class="panel-title">Login with Username and Password</h3>
+            </div>
+            <div class="panel-body">
 
-                        <div class="alert alert-info" th:if="${logout}" role="alert">You've been logged out successfully.</div>
+                <div class="alert alert-info" th:if="${logout}" role="alert">You've been logged out successfully.</div>
 
-                        <div class="alert alert-danger" th:if="${error}" role="alert">Invalid Username or Password!</div>
+                <div class="alert alert-danger" th:if="${error}" role="alert">Invalid Username or Password!</div>
 
 
-                    <form class="form-horizontal" method="post">
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"  />
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" for="username">Username:</label>
-                            <div class="col-sm-10">
-                                <input type="username" class="form-control" id="username" placeholder="Username" name = "username" />
-                            </div>
+                <form class="form-horizontal" method="post">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="username">Username:</label>
+                        <div class="col-sm-10">
+                            <input type="username" class="form-control" id="username" placeholder="Username"
+                                   name="username"/>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" for="password">Password:</label>
-                            <div class="col-sm-10">
-                                <input type="password" class="form-control" id="password" placeholder="Password" name = "password"/>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="password">Password:</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="password" placeholder="Password"
+                                   name="password"/>
                         </div>
+                    </div>
+                    <!--<div class="row">-->
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-default">Submit</button>
+                                <button type="submit" class="btn btn-default" name = "signin">Sign in</button>
                             </div>
                         </div>
-                    </form>
+                    <!--</div>-->
+                </form>
 
-                </div>
+                <h4 class="text-center"><a href="/registration">Create an account</a></h4>
+
             </div>
+        </div>
         <!--</div>-->
     </div>
 </div>

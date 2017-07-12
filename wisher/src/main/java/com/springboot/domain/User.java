@@ -1,8 +1,10 @@
 package com.springboot.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Component
 @Entity
@@ -10,15 +12,20 @@ import javax.persistence.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+    @Column(name = "userID")
+    private int userID;
 
     @Column(name = "username")
     private String username;
-    @Column(name = "authorities")
-    private String authorities;
+
     @Column(name = "password")
     private String password;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Wishes> wishes;
+
+    @Column(name = "authorities")
+    private String authorities;
 
     public User() {}
 
@@ -28,6 +35,14 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public List<Wishes> getWishes() {
+        return wishes;
+    }
+
+    public void setWishes(List<Wishes> wishes) {
+        this.wishes = wishes;
     }
 
     public String getAuthorities() {
@@ -48,6 +63,6 @@ public class User {
 
     @Override
     public String toString() {
-        return id + " " + username + " " + password;
+        return userID + " " + username + " " + password + getWishes().toString();
     }
 }

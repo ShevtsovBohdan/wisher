@@ -23,6 +23,7 @@
         </property>
 
         <mapping class="com.springboot.domain.User"/>
+        <mapping class="com.springboot.domain.Wishes"/>
 
     </session-factory>
 </hibernate-configuration>
