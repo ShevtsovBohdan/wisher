@@ -2,13 +2,14 @@ package com.springboot.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
 
-@Component
+
 @Entity
 @Table(name = "wishes")
 public class Wishes {
@@ -17,9 +18,10 @@ public class Wishes {
     @Column(name = "wishID")
     private int wishID;
 
-//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "userID")
+//    @JsonIgnore
     private User user;
 
     @Column(name = "wishName")
@@ -59,6 +61,29 @@ public class Wishes {
         this.link = link;
     }
 
+    /*
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (int) (wishID ^ (wishID >>> 32));
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof Wishes))
+            return false;
+        Wishes other = (Wishes) obj;
+        if (wishID != other.wishID)
+            return false;
+        return true;
+    }
+*/
     @Override
     public String toString() {
         return wishID + " " + wishName + " " + link;

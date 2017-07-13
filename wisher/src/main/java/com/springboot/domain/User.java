@@ -4,9 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.List;
 
-@Component
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -21,7 +22,7 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Wishes> wishes;
 
     @Column(name = "authorities")
@@ -63,6 +64,6 @@ public class User {
 
     @Override
     public String toString() {
-        return userID + " " + username + " " + password + getWishes().toString();
+        return userID + " " + username + " " + password;
     }
 }

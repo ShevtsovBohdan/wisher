@@ -1,6 +1,7 @@
 package com.springboot.dao;
 
 import com.springboot.domain.User;
+import com.springboot.domain.Wishes;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
@@ -14,11 +15,10 @@ import java.util.List;
 
 public class ManageUser {
 
+    @Transactional
     public User findbyUsername(String uName) {
         User user = null;
-
         Session session = HibernateUnil.getSessionFactory().openSession();
-
 
         try {
             session.beginTransaction();
@@ -40,7 +40,7 @@ public class ManageUser {
 
     }
 
-
+    @Transactional
     public Integer addUser(String username, String password, String auth) {
         Session session = HibernateUnil.getSessionFactory().openSession();
 

@@ -17,8 +17,8 @@ import java.util.Set;
 @Service
 public class UserService implements UserDetailsService{
 
-    @Autowired
-    private User user;
+
+    private User user = new User();
 
     private ManageUser manageUser = new ManageUser();
 

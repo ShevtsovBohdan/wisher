@@ -1,36 +1,88 @@
 package com.springboot.controller;
 
 import com.springboot.dao.ManageUser;
+import com.springboot.dao.ManageWish;
 import com.springboot.domain.User;
+import com.springboot.domain.Wishes;
+import com.springboot.validate.TakeAWish;
 import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.transaction.Transactional;
+import java.util.List;
+
 @Controller
 public class MyController {
 
-    private ManageUser manageUser = new ManageUser();
+    private static ManageUser manageUser = new ManageUser();
+    private static ManageWish manageWish = new ManageWish();
 
-
-    @RequestMapping(value = "/")
-    public ResponseEntity<User> getMainPage() {
+    public static User getActiveUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User)authentication.getPrincipal();
 
-        User user1 = manageUser.findbyUsername(user.getUsername());
+        User activeUser = manageUser.findbyUsername(user.getUsername());
+        return activeUser;
+    }
 
-        return new ResponseEntity<User>(user1, HttpStatus.OK);
+//    @RequestMapping(value = "/")
+//    public ResponseEntity<Wishes> getMainPage() {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User)authentication.getPrincipal();
+//
+//
+//        Wishes wish = manageWish.findbyWishername("nnn");
+////        User user1 = manageUser.findbyUsername(user.getUsername());
+//
+//        return new ResponseEntity<Wishes>(wish, HttpStatus.OK);
+//    }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String getMainPage(ModelMap model) {
+
+
+        List<Wishes> list = getActiveUser().getWishes();
+        model.addAttribute("list", list);
+
+        return "home";
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.POST, params = "action=addWish")
+    public String takeAWish(@ModelAttribute("takeAWish") TakeAWish takeAWish,
+                            ModelMap model) {
+        Wishes wish = new Wishes();
+        wish.setWishName(takeAWish.getName());
+        wish.setLink(takeAWish.getLink());
+
+        wish.setUser(getActiveUser());
+
+        Integer ii = manageWish.addWish(wish);
+
+        List<Wishes> list = getActiveUser().getWishes();
+        model.addAttribute("list", list);
+
+        return "home";
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.POST, params = "action=deleteWish")
+    public String deleteAWish(@ModelAttribute("takeAWish") TakeAWish takeAWish,
+                            ModelMap model) {
+
+        manageWish.deleteWish(takeAWish.getName());
+
+        List<Wishes> list = getActiveUser().getWishes();
+        model.addAttribute("list", list);
+
+        return "home";
     }
 
 
