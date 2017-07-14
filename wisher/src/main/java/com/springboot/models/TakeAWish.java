@@ -1,4 +1,4 @@
-package com.springboot.validate;
+package com.springboot.models;
 
 public class TakeAWish {
     String name;
@@ -19,4 +19,5 @@ public class TakeAWish {
     public void setLink(String link) {
         this.link = link;
     }
+
 }

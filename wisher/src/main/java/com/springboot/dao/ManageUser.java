@@ -10,9 +10,11 @@ import org.springframework.stereotype.Component;
 import org.hibernate.*;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+@Component
 public class ManageUser {
 
     @Transactional
@@ -63,6 +65,41 @@ public class ManageUser {
             session.close();
         }
         return userID;
+    }
+
+    public void ListUser( ){
+        Session session = HibernateUnil.getSessionFactory().openSession();
+        try{
+            session.beginTransaction();
+            List employees = session.createQuery("FROM User").list();
+            for (Iterator iterator =
+                 employees.iterator(); iterator.hasNext();){
+                User employee = (User) iterator.next();
+            }
+            session.getTransaction().commit();
+        }catch (Exception e) {
+            if (session.getTransaction() != null) session.getTransaction().rollback();
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+    }
+
+    public List<User> listUsers(){
+        Session session = HibernateUnil.getSessionFactory().openSession();
+        List users = new ArrayList<User>();
+        try{
+            session.beginTransaction();
+            users = session.createQuery("FROM User").list();
+            session.getTransaction().commit();
+
+        }catch (Exception e) {
+            if (session.getTransaction() != null) session.getTransaction().rollback();
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+        return users;
     }
 
 

@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
-
-
 @Entity
 @Table(name = "wishes")
 public class Wishes {

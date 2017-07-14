@@ -4,7 +4,7 @@ import com.springboot.dao.ManageUser;
 import com.springboot.dao.ManageWish;
 import com.springboot.domain.User;
 import com.springboot.domain.Wishes;
-import com.springboot.validate.TakeAWish;
+import com.springboot.models.TakeAWish;
 import org.hibernate.exception.ConstraintViolationException;
 
 import org.springframework.security.core.Authentication;
@@ -12,21 +12,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Controller
 public class MyController {
 
-    private static ManageUser manageUser = new ManageUser();
-    private static ManageWish manageWish = new ManageWish();
+    private ManageUser manageUser = new ManageUser();
+    private ManageWish manageWish = new ManageWish();
 
-    public static User getActiveUser(){
+    public User getActiveUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User)authentication.getPrincipal();
 
@@ -34,17 +30,7 @@ public class MyController {
         return activeUser;
     }
 
-//    @RequestMapping(value = "/")
-//    public ResponseEntity<Wishes> getMainPage() {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User)authentication.getPrincipal();
-//
-//
-//        Wishes wish = manageWish.findbyWishername("nnn");
-////        User user1 = manageUser.findbyUsername(user.getUsername());
-//
-//        return new ResponseEntity<Wishes>(wish, HttpStatus.OK);
-//    }
+
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getMainPage(ModelMap model) {
@@ -53,10 +39,26 @@ public class MyController {
         List<Wishes> list = getActiveUser().getWishes();
         model.addAttribute("list", list);
 
+        model.addAttribute("manageWish", new ManageWish());
+
         return "home";
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST, params = "action=addWish")
+    @RequestMapping(value = "/{wishID}", method = RequestMethod.GET)
+    public String getMainPage(@PathVariable(value = "wishID") int wishID,
+                              ModelMap model) {
+
+        manageWish.deleteWish(wishID);
+
+        List<Wishes> list = getActiveUser().getWishes();
+        model.addAttribute("list", list);
+
+        model.addAttribute("manageWish", new ManageWish());
+
+        return "home";
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public String takeAWish(@ModelAttribute("takeAWish") TakeAWish takeAWish,
                             ModelMap model) {
         Wishes wish = new Wishes();
@@ -65,7 +67,7 @@ public class MyController {
 
         wish.setUser(getActiveUser());
 
-        Integer ii = manageWish.addWish(wish);
+        manageWish.addWish(wish);
 
         List<Wishes> list = getActiveUser().getWishes();
         model.addAttribute("list", list);
@@ -73,17 +75,17 @@ public class MyController {
         return "home";
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST, params = "action=deleteWish")
-    public String deleteAWish(@ModelAttribute("takeAWish") TakeAWish takeAWish,
-                            ModelMap model) {
-
-        manageWish.deleteWish(takeAWish.getName());
-
-        List<Wishes> list = getActiveUser().getWishes();
-        model.addAttribute("list", list);
-
-        return "home";
-    }
+//    @RequestMapping(value = "/", method = RequestMethod.POST)
+//    public String deleteAWish(@ModelAttribute("takeAWish") TakeAWish takeAWish,
+//                            ModelMap model) {
+//
+//        manageWish.deleteWish(takeAWish.getName());
+//
+//        List<Wishes> list = getActiveUser().getWishes();
+//        model.addAttribute("list", list);
+//
+//        return "home";
+//    }
 
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -98,7 +100,7 @@ public class MyController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String getRegPage(@ModelAttribute("userForm") com.springboot.domain.User userForm,
-                             @ModelAttribute("userValid") com.springboot.validate.Validator validForm,
+                             @ModelAttribute("userValid") com.springboot.models.Validator validForm,
                              @RequestParam(value = "error", required = false) String checkforpass,
                              Model model) {
         model.addAttribute("checkforpass", checkforpass != null);
@@ -111,7 +113,7 @@ public class MyController {
             } catch (ConstraintViolationException e) {
                 return "redirect:/registration?userfound";
             }
-            return "home";
+            return "redirect:/";
         }
     }
 
@@ -122,5 +124,19 @@ public class MyController {
         model.addAttribute("checkforpass", checkforpass != null);
         model.addAttribute("userfound", userfound != null);
         return "registration";
+    }
+
+    @RequestMapping(value = "/checkallusers")
+    public String getAllUsers(Model model) {
+
+        List<Wishes> listWishes = manageWish.listWishes();
+        model.addAttribute("listWishes", listWishes);
+
+
+        List<User> listUsers = manageUser.listUsers();
+        model.addAttribute("listUsers", listUsers);
+
+
+        return "allusers";
     }
 }

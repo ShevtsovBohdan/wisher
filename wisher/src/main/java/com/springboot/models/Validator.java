@@ -1,4 +1,4 @@
-package com.springboot.validate;
+package com.springboot.models;
 
 
 import org.springframework.stereotype.Component;
