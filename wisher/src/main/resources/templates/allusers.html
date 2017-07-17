@@ -10,7 +10,7 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>ddd</title>
+    <title>all</title>
     <style>
 
     </style>
@@ -21,12 +21,21 @@
     <h4 class="text-center"><a href="/">Back to your page</a></h4>
 
     <table class="table">
+        <thead>
+        <tr>
+            <th class="col-md-5">Users</th>
+            <th class="col-md-5">Wishes</th>
+            <th class="col-md-5">Linkes</th>
+        </tr>
+        </thead>
+
         <tbody>
         <tr th:each="user: ${listUsers}">
             <th class="col-md-3" th:text="${user.username}"></th>
         <tr th:each="wish: ${listWishes}">
+            <td th:if="${wish.user.userID} == ${user.userID}"></td>
             <td class="col-md-3" th:if="${wish.user.userID} == ${user.userID}" th:text="${wish.wishName}"></td>
-            <td class="col-md-3" th:if="${wish.user} == user"><a href="#" th:text="${wish.link}"></a></td>
+            <td class="col-md-3" th:if="${wish.user.userID} == ${user.userID}"><a href="#" th:text="${wish.link}"></a></td>
         </tr>
         </tr>
 

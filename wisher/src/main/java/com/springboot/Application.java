@@ -1,7 +1,5 @@
 package com.springboot;
 
-import com.springboot.dao.ManageUser;
-import com.springboot.domain.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

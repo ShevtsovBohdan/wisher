@@ -1,12 +1,7 @@
 package com.springboot.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import java.util.List;
-
 
 @Entity
 @Table(name = "users")
@@ -14,7 +9,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userID")
-    private int userID;
+    public int userID;
 
     @Column(name = "username")
     private String username;

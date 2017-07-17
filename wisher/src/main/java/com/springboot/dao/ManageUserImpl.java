@@ -1,23 +1,20 @@
 package com.springboot.dao;
 
 import com.springboot.domain.User;
-import com.springboot.domain.Wishes;
+
+import com.springboot.interfaces.ManageUser;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Component;
-
 import org.hibernate.*;
-
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 @Component
-public class ManageUser {
-
-    @Transactional
+public class ManageUserImpl implements ManageUser{
+    @Override
     public User findbyUsername(String uName) {
         User user = null;
         Session session = HibernateUnil.getSessionFactory().openSession();
@@ -41,8 +38,7 @@ public class ManageUser {
         }
 
     }
-
-    @Transactional
+    @Override
     public Integer addUser(String username, String password, String auth) {
         Session session = HibernateUnil.getSessionFactory().openSession();
 
@@ -66,25 +62,7 @@ public class ManageUser {
         }
         return userID;
     }
-
-    public void ListUser( ){
-        Session session = HibernateUnil.getSessionFactory().openSession();
-        try{
-            session.beginTransaction();
-            List employees = session.createQuery("FROM User").list();
-            for (Iterator iterator =
-                 employees.iterator(); iterator.hasNext();){
-                User employee = (User) iterator.next();
-            }
-            session.getTransaction().commit();
-        }catch (Exception e) {
-            if (session.getTransaction() != null) session.getTransaction().rollback();
-            e.printStackTrace();
-        }finally {
-            session.close();
-        }
-    }
-
+    @Override
     public List<User> listUsers(){
         Session session = HibernateUnil.getSessionFactory().openSession();
         List users = new ArrayList<User>();
@@ -101,7 +79,5 @@ public class ManageUser {
         }
         return users;
     }
-
-
 }
 

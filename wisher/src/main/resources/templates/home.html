@@ -10,7 +10,7 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>ddd</title>
+    <title>home</title>
     <style>
 
     </style>
@@ -43,20 +43,21 @@
     </form>
     <h4 class="text-center"><a href="/checkallusers">Check wishes of all users</a></h4>
 
-    <table class="table">
+    <table class="table table-bordered">
         <thead>
         <tr>
-            <th class="col-md-3">Wish</th>
-            <th class="col-md-3">Link</th>
+            <th class="col-md-1">Wish</th>
+            <th class="col-md-1">Link</th>
+            <th class="col-md-1"></th>
         </tr>
         </thead>
         <tbody>
 
 
         <tr th:each="wish: ${list}">
-            <td class="col-md-3" th:text="${wish.wishName}"></td>
-            <td class="col-md-3"><a href="#" th:text="${wish.link}"></a></td>
-
+            <td  th:text="${wish.wishName}"></td>
+            <td ><a th:text="${wish.link}" th:href="@{|${wish.link}|}" ></a></td>
+            <!--<td ><a href="#" th:href="@{wish.link}"></a></td>-->
             <td>
                 <button type="button" th:onclick="'deleteWish(\'' +  ${wish.wishID} + '\')'"
                         class="btn btn-danger custom-width">Remove

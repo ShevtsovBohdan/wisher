@@ -16,11 +16,9 @@ public class Wishes {
     @Column(name = "wishID")
     private int wishID;
 
-
     @ManyToOne(optional = false)
     @JoinColumn(name = "userID")
-//    @JsonIgnore
-    private User user;
+    public User user;
 
     @Column(name = "wishName")
     private String wishName;
@@ -59,29 +57,6 @@ public class Wishes {
         this.link = link;
     }
 
-    /*
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + (int) (wishID ^ (wishID >>> 32));
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (!(obj instanceof Wishes))
-            return false;
-        Wishes other = (Wishes) obj;
-        if (wishID != other.wishID)
-            return false;
-        return true;
-    }
-*/
     @Override
     public String toString() {
         return wishID + " " + wishName + " " + link;

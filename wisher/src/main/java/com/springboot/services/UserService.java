@@ -1,9 +1,8 @@
 package com.springboot.services;
 
 
-import com.springboot.dao.ManageUser;
+import com.springboot.dao.ManageUserImpl;
 import com.springboot.domain.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,11 +19,11 @@ public class UserService implements UserDetailsService{
 
     private User user = new User();
 
-    private ManageUser manageUser = new ManageUser();
+    private ManageUserImpl manageUserImpl = new ManageUserImpl();
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        user = manageUser.findbyUsername(username);
+        user = manageUserImpl.findbyUsername(username);
         if(user != null) {
 
             Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();

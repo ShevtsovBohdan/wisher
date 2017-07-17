@@ -2,6 +2,7 @@ package com.springboot.dao;
 
 
 import com.springboot.domain.Wishes;
+import com.springboot.interfaces.ManageWish;
 import org.hibernate.*;
 
 import org.hibernate.criterion.Restrictions;
@@ -12,9 +13,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class ManageWish {
-
-
+public class ManageWishImpl implements ManageWish{
+    @Override
     public Wishes findbyWishername(String wName) {
         Wishes wish = null;
         Session session = HibernateUnil.getSessionFactory().openSession();
@@ -37,7 +37,7 @@ public class ManageWish {
         }
 
     }
-
+    @Override
     public Integer addWish(Wishes wish) {
         Session session = HibernateUnil.getSessionFactory().openSession();
 
@@ -55,7 +55,7 @@ public class ManageWish {
         }
         return wishAddedID;
     }
-
+    @Override
     public void deleteWish(String wishName) {
         Session session = HibernateUnil.getSessionFactory().openSession();
         String hql = "DELETE FROM Wishes WHERE wishName = :wishName";
@@ -74,7 +74,7 @@ public class ManageWish {
             session.close();
         }
     }
-
+    @Override
     public void deleteWish(int wishID) {
         Session session = HibernateUnil.getSessionFactory().openSession();
         String hql = "DELETE FROM Wishes WHERE wishID = :wishID";
@@ -91,7 +91,7 @@ public class ManageWish {
             session.close();
         }
     }
-
+    @Override
     public List<Wishes> listWishes(){
         Session session = HibernateUnil.getSessionFactory().openSession();
         List wishes = new ArrayList<Wishes>();

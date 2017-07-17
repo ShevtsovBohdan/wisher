@@ -1,7 +1,7 @@
 package com.springboot.controller;
 
-import com.springboot.dao.ManageUser;
-import com.springboot.dao.ManageWish;
+import com.springboot.dao.ManageUserImpl;
+import com.springboot.dao.ManageWishImpl;
 import com.springboot.domain.User;
 import com.springboot.domain.Wishes;
 import com.springboot.models.TakeAWish;
@@ -19,14 +19,14 @@ import java.util.List;
 @Controller
 public class MyController {
 
-    private ManageUser manageUser = new ManageUser();
-    private ManageWish manageWish = new ManageWish();
+    private ManageUserImpl manageUserImpl = new ManageUserImpl();
+    private ManageWishImpl manageWishImpl = new ManageWishImpl();
 
     public User getActiveUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User)authentication.getPrincipal();
 
-        User activeUser = manageUser.findbyUsername(user.getUsername());
+        User activeUser = manageUserImpl.findbyUsername(user.getUsername());
         return activeUser;
     }
 
@@ -39,7 +39,7 @@ public class MyController {
         List<Wishes> list = getActiveUser().getWishes();
         model.addAttribute("list", list);
 
-        model.addAttribute("manageWish", new ManageWish());
+        model.addAttribute("manageWishImpl", new ManageWishImpl());
 
         return "home";
     }
@@ -48,14 +48,14 @@ public class MyController {
     public String getMainPage(@PathVariable(value = "wishID") int wishID,
                               ModelMap model) {
 
-        manageWish.deleteWish(wishID);
+        manageWishImpl.deleteWish(wishID);
 
         List<Wishes> list = getActiveUser().getWishes();
         model.addAttribute("list", list);
 
-        model.addAttribute("manageWish", new ManageWish());
+        model.addAttribute("manageWishImpl", new ManageWishImpl());
 
-        return "home";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
@@ -67,7 +67,7 @@ public class MyController {
 
         wish.setUser(getActiveUser());
 
-        manageWish.addWish(wish);
+        manageWishImpl.addWish(wish);
 
         List<Wishes> list = getActiveUser().getWishes();
         model.addAttribute("list", list);
@@ -79,7 +79,7 @@ public class MyController {
 //    public String deleteAWish(@ModelAttribute("takeAWish") TakeAWish takeAWish,
 //                            ModelMap model) {
 //
-//        manageWish.deleteWish(takeAWish.getName());
+//        manageWishImpl.deleteWish(takeAWish.getName());
 //
 //        List<Wishes> list = getActiveUser().getWishes();
 //        model.addAttribute("list", list);
@@ -109,7 +109,7 @@ public class MyController {
             return "redirect:/registration?checkforpass";
         } else {
             try {
-                manageUser.addUser(userForm.getUsername(), userForm.getPassword(), "USER");
+                manageUserImpl.addUser(userForm.getUsername(), userForm.getPassword(), "USER");
             } catch (ConstraintViolationException e) {
                 return "redirect:/registration?userfound";
             }
@@ -129,11 +129,11 @@ public class MyController {
     @RequestMapping(value = "/checkallusers")
     public String getAllUsers(Model model) {
 
-        List<Wishes> listWishes = manageWish.listWishes();
+        List<Wishes> listWishes = manageWishImpl.listWishes();
         model.addAttribute("listWishes", listWishes);
 
 
-        List<User> listUsers = manageUser.listUsers();
+        List<User> listUsers = manageUserImpl.listUsers();
         model.addAttribute("listUsers", listUsers);
 
 
