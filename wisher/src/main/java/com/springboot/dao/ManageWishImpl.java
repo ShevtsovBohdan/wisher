@@ -1,47 +1,43 @@
 package com.springboot.dao;
 
-
-import com.springboot.domain.Wishes;
+import com.springboot.domain.User;
+import com.springboot.domain.Wish;
 import com.springboot.interfaces.ManageWish;
 import org.hibernate.*;
 
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Component;
 
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class ManageWishImpl implements ManageWish{
+/**
+ * ManageWishImpl is a base class for database connection and working with Wish object
+ */
+@Component
+public class ManageWishImpl implements ManageWish {
+    /**
+     * Create Wish object by received parameters and saves it to the database.
+     * <p>
+     * Returns the id of the saved Wish object in database.
+     *
+     * @param wishName   Name of the wish that will be saved in the database
+     * @param wishLink   Link of the wish that will be saved in the database
+     * @param activeUser User that will be correspond to the Wish that will be saved in the database
+     * @return
+     */
     @Override
-    public Wishes findbyWishername(String wName) {
-        Wishes wish = null;
-        Session session = HibernateUnil.getSessionFactory().openSession();
-
-        try {
-            session.beginTransaction();
-            Criteria cr = session.createCriteria(Wishes.class);
-            cr.add(Restrictions.like("wishName", wName));
-            List wishes = cr.list();
-            for (Iterator iterator = wishes.iterator(); iterator.hasNext(); ) {
-                wish = (Wishes) iterator.next();
-            }
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            if (session.getTransaction() != null) session.getTransaction().rollback();
-            e.printStackTrace();
-        } finally {
-           session.close();
-            return wish;
-        }
-
-    }
-    @Override
-    public Integer addWish(Wishes wish) {
+    public Integer addWish(String wishName, String wishLink, User activeUser) {
         Session session = HibernateUnil.getSessionFactory().openSession();
 
         Integer wishAddedID = null;
+
+        Wish wish = new Wish();
+        wish.setWishName(wishName);
+        wish.setLink(wishLink);
+        wish.setUser(activeUser);
 
         try {
             session.beginTransaction();
@@ -55,29 +51,16 @@ public class ManageWishImpl implements ManageWish{
         }
         return wishAddedID;
     }
-    @Override
-    public void deleteWish(String wishName) {
-        Session session = HibernateUnil.getSessionFactory().openSession();
-        String hql = "DELETE FROM Wishes WHERE wishName = :wishName";
-        Query query = session.createQuery(hql);
-        query.setParameter("wishName", wishName);
 
-
-        try {
-            session.beginTransaction();
-            query.executeUpdate();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            if (session.getTransaction() != null) session.getTransaction().rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-    }
+    /**
+     * Delete Wish object from the database by received id.
+     *
+     * @param wishID the id of the Wish object that will be removed from the database
+     */
     @Override
     public void deleteWish(int wishID) {
         Session session = HibernateUnil.getSessionFactory().openSession();
-        String hql = "DELETE FROM Wishes WHERE wishID = :wishID";
+        String hql = "DELETE FROM Wish WHERE wishID = :wishID";
         Query query = session.createQuery(hql);
         query.setParameter("wishID", wishID);
         try {
@@ -91,19 +74,25 @@ public class ManageWishImpl implements ManageWish{
             session.close();
         }
     }
+
+    /**
+     * Returns the list of Wish objects that have been saved to the database
+     *
+     * @return the list of Wish objects that have been saved to the database
+     */
     @Override
-    public List<Wishes> listWishes(){
+    public List<Wish> listWishes() {
         Session session = HibernateUnil.getSessionFactory().openSession();
-        List wishes = new ArrayList<Wishes>();
-        try{
+        List wishes = new ArrayList<Wish>();
+        try {
             session.beginTransaction();
-            wishes = session.createQuery("FROM Wishes").list();
+            wishes = session.createQuery("FROM Wish").list();
             session.getTransaction().commit();
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             if (session.getTransaction() != null) session.getTransaction().rollback();
             e.printStackTrace();
-        }finally {
+        } finally {
             session.close();
         }
         return wishes;

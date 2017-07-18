@@ -1,8 +1,13 @@
 package com.springboot.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
+/**
+ * Persistent class that would be saved to the database
+ */
 @Entity
 @Table(name = "users")
 public class User {
@@ -18,12 +23,13 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Wishes> wishes;
+    private List<Wish> wishes;
 
     @Column(name = "authorities")
     private String authorities;
 
-    public User() {}
+    public User() {
+    }
 
     public String getUsername() {
         return username;
@@ -33,11 +39,11 @@ public class User {
         this.username = username;
     }
 
-    public List<Wishes> getWishes() {
+    public List<Wish> getWishes() {
         return wishes;
     }
 
-    public void setWishes(List<Wishes> wishes) {
+    public void setWishes(List<Wish> wishes) {
         this.wishes = wishes;
     }
 

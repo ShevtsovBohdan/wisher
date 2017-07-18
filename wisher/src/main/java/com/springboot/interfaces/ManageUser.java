@@ -4,9 +4,13 @@ import com.springboot.domain.User;
 
 import java.util.List;
 
+/**
+ * ManageUser is a base interface class for database connection and working with User object
+ */
 public interface ManageUser {
-    public User findbyUsername(String uName);
+    public User findbyUserName(String uName);
+
     public Integer addUser(String username, String password, String auth);
-//    public void ListUser();
+
     public List<User> listUsers();
 }

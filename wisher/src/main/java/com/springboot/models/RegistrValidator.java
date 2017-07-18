@@ -3,8 +3,12 @@ package com.springboot.models;
 
 import org.springframework.stereotype.Component;
 
+
+/**
+ * Class that used for receiving information from the registration form
+ */
 @Component
-public class Validator {
+public class RegistrValidator {
 
     private String username;
     private String password;

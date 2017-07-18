@@ -1,16 +1,13 @@
 package com.springboot.domain;
 
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 
+/**
+ * Persistent class that would be saved to the database
+ */
 @Entity
 @Table(name = "wishes")
-public class Wishes {
+public class Wish {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "wishID")

@@ -1,8 +1,11 @@
 package com.springboot.models;
 
+/**
+ * Class that used for receiving information from the user's main page form
+ */
 public class TakeAWish {
-    String name;
-    String link;
+    private String name;
+    private String link;
 
     public String getName() {
         return name;
@@ -19,5 +22,4 @@ public class TakeAWish {
     public void setLink(String link) {
         this.link = link;
     }
-
 }

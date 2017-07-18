@@ -35,7 +35,7 @@
         <tr th:each="wish: ${listWishes}">
             <td th:if="${wish.user.userID} == ${user.userID}"></td>
             <td class="col-md-3" th:if="${wish.user.userID} == ${user.userID}" th:text="${wish.wishName}"></td>
-            <td class="col-md-3" th:if="${wish.user.userID} == ${user.userID}"><a href="#" th:text="${wish.link}"></a></td>
+            <td class="col-md-3" th:if="${wish.user.userID} == ${user.userID}"><a th:text="${wish.link}" th:href="@{|${wish.link}|}"></a></td>
         </tr>
         </tr>
 

@@ -8,14 +8,26 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Component;
 import org.hibernate.*;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * ManageUserImpl is a base class for database connection and working with User object
+ */
+
 @Component
-public class ManageUserImpl implements ManageUser{
+public class ManageUserImpl implements ManageUser {
+
+    /**
+     * Returns a User object by username from the database or null if such username wasn't found
+     *
+     * @param uName the name of user that will be returned
+     * @return User object or null
+     */
     @Override
-    public User findbyUsername(String uName) {
+    public User findbyUserName(String uName) {
         User user = null;
         Session session = HibernateUnil.getSessionFactory().openSession();
 
@@ -38,6 +50,17 @@ public class ManageUserImpl implements ManageUser{
         }
 
     }
+
+    /**
+     * Create User object with adjusted parameters and save it to the database
+     * <p>
+     * Returns the id of the saved User object in database
+     *
+     * @param username the name of the user that you want to be saved to database
+     * @param password the password of the user that you want to be saved to database
+     * @param auth     the role of the user that you want to be saved to database
+     * @return the id of the saved User object in database
+     */
     @Override
     public Integer addUser(String username, String password, String auth) {
         Session session = HibernateUnil.getSessionFactory().openSession();
@@ -62,19 +85,25 @@ public class ManageUserImpl implements ManageUser{
         }
         return userID;
     }
+
+    /**
+     * Returns the list of User objects that have been saved to the database
+     *
+     * @return the list of User objects that have been saved to the database
+     */
     @Override
-    public List<User> listUsers(){
+    public List<User> listUsers() {
         Session session = HibernateUnil.getSessionFactory().openSession();
         List users = new ArrayList<User>();
-        try{
+        try {
             session.beginTransaction();
             users = session.createQuery("FROM User").list();
             session.getTransaction().commit();
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             if (session.getTransaction() != null) session.getTransaction().rollback();
             e.printStackTrace();
-        }finally {
+        } finally {
             session.close();
         }
         return users;

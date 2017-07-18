@@ -1,30 +1,40 @@
 package com.springboot.services;
 
-
-import com.springboot.dao.ManageUserImpl;
 import com.springboot.domain.User;
+import com.springboot.interfaces.ManageUser;
+import com.springboot.interfaces.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Class used for creating UserDetails object for login system realisation
+ */
 @Service
-public class UserService implements UserDetailsService{
-
+public class UserServiceImpl implements UserService {
 
     private User user = new User();
 
-    private ManageUserImpl manageUserImpl = new ManageUserImpl();
+    @Autowired
+    private ManageUser manageUser;
 
+    /**
+     * Returns UserDetails object that contains information about user loaded from the database by username
+     *
+     * @param username the name of the user that will be returned from the datamase
+     * @return UserDetails object that contains detail information about user
+     * @throws UsernameNotFoundException if such username wasn't found
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        user = manageUserImpl.findbyUsername(username);
-        if(user != null) {
+        user = manageUser.findbyUserName(username);
+        if (user != null) {
 
             Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
             grantedAuthorities.add(new SimpleGrantedAuthority(user.getAuthorities()));

@@ -9,55 +9,65 @@
     <schema id="3" parent="1" name="information_schema"/>
     <schema id="4" parent="1" name="mysql"/>
     <schema id="5" parent="1" name="performance_schema"/>
-    <table id="6" parent="2" name="users"/>
-    <table id="7" parent="2" name="wishes"/>
-    <column id="8" parent="6" name="userID">
+    <schema id="6" parent="1" name="sys"/>
+    <table id="7" parent="2" name="users"/>
+    <table id="8" parent="2" name="wishes"/>
+    <column id="9" parent="7" name="userID">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="9" parent="6" name="username">
+    <column id="10" parent="7" name="username">
       <Position>2</Position>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="10" parent="6" name="password">
+    <column id="11" parent="7" name="password">
       <Position>3</Position>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="11" parent="6" name="authorities">
+    <column id="12" parent="7" name="authorities">
       <Position>4</Position>
       <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
     </column>
-    <key id="12" parent="6" name="PRIMARY">
+    <index id="13" parent="7" name="users_username_uindex">
+      <ColNames>username</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="14" parent="7" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>userID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="13" parent="7" name="wishID">
+    <key id="15" parent="7" name="users_username_uindex">
+      <ColNames>username</ColNames>
+      <UnderlyingIndexName>users_username_uindex</UnderlyingIndexName>
+    </key>
+    <column id="16" parent="8" name="wishID">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="14" parent="7" name="userID">
+    <column id="17" parent="8" name="userID">
       <Position>2</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="15" parent="7" name="wishName">
+    <column id="18" parent="8" name="wishName">
       <Position>3</Position>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="16" parent="7" name="link">
+    <column id="19" parent="8" name="link">
       <Position>4</Position>
-      <DataType>varchar(45)|0</DataType>
+      <DataType>varchar(145)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="17" parent="7" name="PRIMARY">
+    <key id="20" parent="8" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>wishID</ColNames>
       <Primary>1</Primary>

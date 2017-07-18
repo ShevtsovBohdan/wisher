@@ -12,18 +12,21 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>home</title>
     <style>
-
+        p{
+            color:red;
+        }
     </style>
 </head>
 <body>
 <div class="container-fluid">
-    <form class="form-horizontal" method="post">
+    <form class="form-horizontal" method="post" th:object="${wishValidation}">
         <!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
         <div class="form-group" style="margin-top:20px">
             <label class="control-label col-sm-2" for="wish">Your wish:</label>
             <div class="col-sm-5">
                 <input type="name" class="form-control" id="wish" placeholder="Wish"
                        name="name"/>
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
             </div>
         </div>
         <div class="form-group">
@@ -31,6 +34,7 @@
             <div class="col-sm-5">
                 <input type="link" class="form-control" id="link" placeholder="Link"
                        name="link"/>
+                <p th:if="${#fields.hasErrors('link')}" th:errors="*{link}"></p>
             </div>
         </div>
 
