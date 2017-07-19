@@ -3,6 +3,7 @@ package com.springboot.interfaces;
 import com.springboot.domain.User;
 import com.springboot.domain.Wish;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -14,4 +15,10 @@ public interface ManageWish {
     public void deleteWish(int wishID);
 
     public List<Wish> listWishes();
+
+    public List<Wish> listWishes(int setStartValue, int userID);
+
+//    public Long numberOfRows();
+
+    public long numberOfRows(int userID);
 }

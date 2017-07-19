@@ -15,10 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -30,6 +27,8 @@ public class UserController {
     @Autowired
     private ManageWish manageWish;
 
+    private final static int defaultPageNumber = 1;
+
     public User getActiveUser() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -40,48 +39,78 @@ public class UserController {
         return activeUser;
     }
 
-//    @RequestMapping(value = "/", method = RequestMethod.GET)
-//    public String getMainPage(ModelMap model) {
-//
-//
-//        List<Wish> list = getActiveUser().getWishes();
-//        model.addAttribute("list", list);
-//
-//        model.addAttribute("manageWish", new ManageWishImpl());
-//
-//        return "home";
-//    }
-
-    @RequestMapping(value = {"/{wishID}", "/"}, method = RequestMethod.GET)
-    public String getMainPage(@PathVariable(value = "wishID", required = false) Integer wishID,
-                              ModelMap model) {
-        model.addAttribute(new WishValidation());
-        if (wishID != null) {
-            manageWish.deleteWish(wishID);
-            return "redirect:/";
-        } else {
-            List<Wish> list = getActiveUser().getWishes();
-            model.addAttribute("list", list);
-
-            model.addAttribute("manageWish", new ManageWishImpl());
-            return "home";
-        }
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String getMainPage(ModelMap model) {
+        return "redirect:/view/1";
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+
+    /**
+     * Old
+     */
+//    @RequestMapping(value = {"/{wishID}", "/"}, method = RequestMethod.GET)
+//    public String getMainPage(@PathVariable(value = "wishID", required = false) Integer wishID,
+//                              ModelMap model) {
+//
+//        if (wishID != null) {
+//            manageWish.deleteWish(wishID);
+//            return "redirect:/";
+//        } else {
+//            Number number = (Number) manageWish.numberOfRows();
+//            model.addAttribute("rowsNumber", number);
+//            model.addAttribute(new WishValidation());
+//
+//            List<Wish> list = getActiveUser().getWishes();
+//            model.addAttribute("list", list);
+//
+//            model.addAttribute("manageWish", new ManageWishImpl());
+//            return "home";
+//        }
+//    }
+    @RequestMapping(value = "/view/{viewPageNumb}", method = RequestMethod.GET)
+    public String getMainPage(@PathVariable(value = "viewPageNumb") Integer viewPageNumb,
+                              ModelMap model) {
+
+        List<Wish> activeWishesList = manageWish.listWishes(viewPageNumb, getActiveUser().userID);
+        Long numberOfRows = manageWish.numberOfRows(getActiveUser().userID);
+
+        long attributeRowsNumberValue = (numberOfRows + ManageWishImpl.MAX_ELEMENT - 1) / ManageWishImpl.MAX_ELEMENT;
+        model.addAttribute("rowsNumber", attributeRowsNumberValue);
+        model.addAttribute(new WishValidation());
+
+        model.addAttribute("list", activeWishesList);
+
+        model.addAttribute(new WishValidation());
+
+//            model.addAttribute("manageWish", new ManageWishImpl());
+        return "home";
+
+    }
+
+
+//    @RequestMapping(value = "/wishespage/{startNumb}", method = RequestMethod.GET)
+//    public String getSomeWishes(@PathVariable(value = "startNumb") Integer startNumb){
+//        List<Wish> list = manageWish.listWishes(startNumb);
+//
+//
+//        return "redirect:/";
+//    }
+
+    @RequestMapping(value = "/view/{viewPageNumber}", method = RequestMethod.POST)
     public String takeAWish(@ModelAttribute("takeAWish") TakeAWish takeAWish,
                             @Valid WishValidation wishValidation, BindingResult bindingResult,
                             ModelMap model) {
-        if(bindingResult.hasErrors()){
-            return "home";
+        if (!bindingResult.hasErrors()) {
+            manageWish.addWish(takeAWish.getName(), takeAWish.getLink(), getActiveUser());
         }
+        List<Wish> activeWishesList = manageWish.listWishes(defaultPageNumber, getActiveUser().userID);
+        model.addAttribute("list", activeWishesList);
 
-        manageWish.addWish(takeAWish.getName(), takeAWish.getLink(), getActiveUser());
-
-        List<Wish> list = getActiveUser().getWishes();
-        model.addAttribute("list", list);
-
+        Long numberOfRows = manageWish.numberOfRows(getActiveUser().userID);
+        long attributeRowsNumberValue = (numberOfRows + ManageWishImpl.MAX_ELEMENT - 1) / ManageWishImpl.MAX_ELEMENT;
+        model.addAttribute("rowsNumber", attributeRowsNumberValue);
         return "home";
+
     }
 
     @RequestMapping(value = "/checkallusers")

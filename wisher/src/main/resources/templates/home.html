@@ -15,6 +15,10 @@
         p{
             color:red;
         }
+
+        ul li{
+            display: inline;
+        }
     </style>
 </head>
 <body>
@@ -70,11 +74,17 @@
         </tr>
         </tbody>
     </table>
+
+    <ul th:align="center">
+        <li th:each="page : ${#numbers.sequence( 1, __${rowsNumber}__)}"><a th:text="${page}" th:href="@{|/view/${page}|}"></a></li>
+    </ul>
+
+
 </div>
 <script>
 
     function deleteWish(id) {
-        location.href = '/' + id;
+        location.href = '/deletewish/' + id;
     }
 </script>
 

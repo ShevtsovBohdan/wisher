@@ -10,6 +10,11 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        p {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -25,7 +30,7 @@
                 <div class="alert alert-info" th:if="${userfound}" role="alert">Such username already exist</div>
 
 
-                <form class="form-horizontal" method="post"  th:object="${registrationValidation}">
+                <form class="form-horizontal" method="post" th:object="${registrationValidation}">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="username">Username:</label>
