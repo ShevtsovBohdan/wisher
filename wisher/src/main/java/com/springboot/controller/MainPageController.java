@@ -5,14 +5,12 @@ import com.springboot.domain.User;
 import com.springboot.domain.Wish;
 import com.springboot.interfaces.ManageUser;
 import com.springboot.interfaces.ManageWish;
-import com.springboot.models.RegistrationValidation;
 import com.springboot.models.TakeAWish;
 import com.springboot.models.WishValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +19,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-public class UserController {
+public class MainPageController {
     @Autowired
     private ManageUser manageUser;
     @Autowired
@@ -39,7 +37,7 @@ public class UserController {
         return activeUser;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "/view"}, method = RequestMethod.GET)
     public String getMainPage(ModelMap model) {
         return "redirect:/view/1";
     }
@@ -67,20 +65,34 @@ public class UserController {
 //            return "home";
 //        }
 //    }
+
+    @RequestMapping(value = {"/deletewish/{wishID}/{viewPageNumb}"}, method = RequestMethod.GET)
+    public String deleteWish(@PathVariable(value = "wishID") Integer wishID,
+                             @PathVariable(value = "viewPageNumb") Integer viewPageNumb,
+                              ModelMap model) {
+
+        manageWish.deleteWish(wishID);
+        return "redirect:/view/"+viewPageNumb;
+    }
+
+
     @RequestMapping(value = "/view/{viewPageNumb}", method = RequestMethod.GET)
     public String getMainPage(@PathVariable(value = "viewPageNumb") Integer viewPageNumb,
                               ModelMap model) {
-
         List<Wish> activeWishesList = manageWish.listWishes(viewPageNumb, getActiveUser().userID);
         Long numberOfRows = manageWish.numberOfRows(getActiveUser().userID);
 
-        long attributeRowsNumberValue = (numberOfRows + ManageWishImpl.MAX_ELEMENT - 1) / ManageWishImpl.MAX_ELEMENT;
+        long attributeRowsNumberValue = (numberOfRows + ManageWishImpl.MAX_ELEMENT_ON_THE_PAGE - 1) / ManageWishImpl.MAX_ELEMENT_ON_THE_PAGE;
+        if (attributeRowsNumberValue == 0) {
+           attributeRowsNumberValue = 1;
+        }
         model.addAttribute("rowsNumber", attributeRowsNumberValue);
         model.addAttribute(new WishValidation());
 
         model.addAttribute("list", activeWishesList);
 
         model.addAttribute(new WishValidation());
+        model.addAttribute("viewPageNumb", viewPageNumb);
 
 //            model.addAttribute("manageWish", new ManageWishImpl());
         return "home";
@@ -97,9 +109,9 @@ public class UserController {
 //    }
 
     @RequestMapping(value = "/view/{viewPageNumber}", method = RequestMethod.POST)
-    public String takeAWish(@ModelAttribute("takeAWish") TakeAWish takeAWish,
-                            @Valid WishValidation wishValidation, BindingResult bindingResult,
-                            ModelMap model) {
+    public String putWish(@ModelAttribute("takeAWish") TakeAWish takeAWish,
+                          @Valid WishValidation wishValidation, BindingResult bindingResult,
+                          ModelMap model) {
         if (!bindingResult.hasErrors()) {
             manageWish.addWish(takeAWish.getName(), takeAWish.getLink(), getActiveUser());
         }
@@ -107,23 +119,13 @@ public class UserController {
         model.addAttribute("list", activeWishesList);
 
         Long numberOfRows = manageWish.numberOfRows(getActiveUser().userID);
-        long attributeRowsNumberValue = (numberOfRows + ManageWishImpl.MAX_ELEMENT - 1) / ManageWishImpl.MAX_ELEMENT;
+        long attributeRowsNumberValue = (numberOfRows + ManageWishImpl.MAX_ELEMENT_ON_THE_PAGE - 1) / ManageWishImpl.MAX_ELEMENT_ON_THE_PAGE;
+        if (attributeRowsNumberValue == 0) {
+            attributeRowsNumberValue = 1;
+        }
         model.addAttribute("rowsNumber", attributeRowsNumberValue);
+//        model.addAttribute("viewPageNumb", viewPageNumb);
         return "home";
 
-    }
-
-    @RequestMapping(value = "/checkallusers")
-    public String getAllUsers(Model model) {
-
-        List<Wish> listWishes = manageWish.listWishes();
-        model.addAttribute("listWishes", listWishes);
-
-
-        List<User> listUsers = manageUser.listUsers();
-        model.addAttribute("listUsers", listUsers);
-
-
-        return "allusers";
     }
 }

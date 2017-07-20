@@ -18,7 +18,9 @@ public interface ManageWish {
 
     public List<Wish> listWishes(int setStartValue, int userID);
 
-//    public Long numberOfRows();
+    public List<Wish> listAllUsersWishes(int startValue, int maxValue);
 
     public long numberOfRows(int userID);
+
+    public long numberOfRows();
 }

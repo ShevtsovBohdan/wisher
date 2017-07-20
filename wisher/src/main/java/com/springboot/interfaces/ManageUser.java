@@ -13,4 +13,7 @@ public interface ManageUser {
     public Integer addUser(String username, String password, String auth);
 
     public List<User> listUsers();
+
+    public long numberOfRows();
+
 }

@@ -5,15 +5,10 @@ import com.springboot.domain.Wish;
 import com.springboot.interfaces.ManageWish;
 import org.hibernate.*;
 
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,7 +18,7 @@ import java.util.List;
 @Component
 public class ManageWishImpl implements ManageWish {
     //    private static final int START_ELEMENT = 0;
-    public static final int MAX_ELEMENT = 10;
+    public static final int MAX_ELEMENT_ON_THE_PAGE = 10;
 
     /**
      * Create Wish object by received parameters and saves it to the database.
@@ -117,11 +112,11 @@ public class ManageWishImpl implements ManageWish {
             query.addEntity(Wish.class);
             query.setParameter("userID", userID);
 
-            query.setParameter("limit", (setStartValue - 1) * MAX_ELEMENT);
-            if (numberOfRows - MAX_ELEMENT >= 0) {
-                query.setParameter("offset", MAX_ELEMENT);
+            query.setParameter("limit", (setStartValue - 1) * MAX_ELEMENT_ON_THE_PAGE);
+            if (numberOfRows - MAX_ELEMENT_ON_THE_PAGE >= 0) {
+                query.setParameter("offset", MAX_ELEMENT_ON_THE_PAGE);
             } else {
-                query.setParameter("offset", numberOfRows%MAX_ELEMENT);
+                query.setParameter("offset", numberOfRows% MAX_ELEMENT_ON_THE_PAGE);
             }
 
             wishes = query.list();
@@ -136,26 +131,30 @@ public class ManageWishImpl implements ManageWish {
         }
     }
 
-//    @Override
-//    public Long numberOfRows() {
-//        List totalNumb = new ArrayList<>();
-//        Session session = HibernateUnil.getSessionFactory().openSession();
-//        try {
-//            session.beginTransaction();
-//            Criteria criteria = session.createCriteria(Wish.class);
-//            criteria.setProjection(Projections.rowCount());
-//            totalNumb = criteria.list();
-//            session.getTransaction().commit();
-//
-//        } catch (Exception e) {
-//            if (session.getTransaction() != null) session.getTransaction().rollback();
-//            e.printStackTrace();
-//        } finally {
-//            session.close();
-//            return (((Long)totalNumb.get(0)) - 1 + MAX_ELEMENT)/MAX_ELEMENT;
-//        }
-//
-//    }
+    @Override
+    public List<Wish> listAllUsersWishes(int startValue, int maxValue) {
+        List wishes = new LinkedList<Wish>();
+        Session session = HibernateUnil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            String sql = "select * from wishes order by userID limit :limit, :offset";
+            SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(Wish.class);
+
+            query.setParameter("limit", (startValue - 1) * maxValue);
+            query.setParameter("offset", maxValue);
+
+            wishes = query.list();
+
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            if (session.getTransaction() != null) session.getTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+            return wishes;
+        }
+    }
 
     @Override
     public long numberOfRows(int userID) {
@@ -166,6 +165,27 @@ public class ManageWishImpl implements ManageWish {
             String hql = "select count(userID) from wishes WHERE userID = :userID";
             SQLQuery query = session.createSQLQuery(hql);
             query.setParameter("userID", userID);
+            List numb = query.list();
+            numbToLong = (BigInteger) numb.get(0);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            if (session.getTransaction() != null) session.getTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+            return numbToLong.longValue();
+        }
+
+    }
+
+    @Override
+    public long numberOfRows() {
+        BigInteger numbToLong = new BigInteger("1");
+        Session session = HibernateUnil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            String hql = "select count(userID) from wishes";
+            SQLQuery query = session.createSQLQuery(hql);
             List numb = query.list();
             numbToLong = (BigInteger) numb.get(0);
             session.getTransaction().commit();

@@ -9,6 +9,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Component;
 import org.hibernate.*;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -48,7 +49,6 @@ public class ManageUserImpl implements ManageUser {
             session.close();
             return user;
         }
-
     }
 
     /**
@@ -108,5 +108,27 @@ public class ManageUserImpl implements ManageUser {
         }
         return users;
     }
+
+    @Override
+    public long numberOfRows() {
+        BigInteger numbToLong = new BigInteger("1");
+        Session session = HibernateUnil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            String hql = "select count(username) from users";
+            SQLQuery query = session.createSQLQuery(hql);
+            List numb = query.list();
+            numbToLong = (BigInteger) numb.get(0);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            if (session.getTransaction() != null) session.getTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+            return numbToLong.longValue();
+        }
+
+    }
+
 }
 

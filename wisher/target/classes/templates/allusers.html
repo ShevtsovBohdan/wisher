@@ -12,7 +12,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>all</title>
     <style>
-
+        ul li{
+            display: inline;
+        }
     </style>
 </head>
 <body>
@@ -41,6 +43,10 @@
 
         </tbody>
     </table>
+
+    <ul th:align="center">
+        <li th:each="page : ${#numbers.sequence( 1, __${rowsNumber}__)}"><a th:text="${page}" th:href="@{|/checkallusers/${page}|}"></a></li>
+    </ul>
 
 </div>
 </body>
