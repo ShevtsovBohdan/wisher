@@ -23,4 +23,8 @@ public interface ManageWish {
     public long numberOfRows(int userID);
 
     public long numberOfRows();
+
+    public List<Wish> search(int userID, String searchStr);
+
+    public List<Wish> searchAllWishes(String searchStr);
 }

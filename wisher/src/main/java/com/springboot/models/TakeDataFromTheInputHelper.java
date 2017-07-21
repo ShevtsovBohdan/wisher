@@ -1,18 +1,17 @@
 package com.springboot.models;
 
-
 import org.springframework.stereotype.Component;
 
-
 /**
- * Class that used for receiving information from the registration form
+ * Class that used for receiving information from the user's registration form
  */
 @Component
-public class RegistrValidator {
+public class TakeDataFromTheInputHelper {
 
     private String username;
     private String password;
     private String passwordconf;
+    private String search;
 
     public String getUsername() {
         return username;
@@ -36,5 +35,13 @@ public class RegistrValidator {
 
     public void setPasswordconf(String passwordconf) {
         this.passwordconf = passwordconf;
+    }
+
+    public String getSearchRequest() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
     }
 }

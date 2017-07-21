@@ -5,6 +5,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+/**
+ * Class that used for verification information from the form.
+ */
 public class RegistrationValidation {
     private static final int PASSWORD_MIN_SIZE = 4;
     private static final int PASSWORD_MAX_SIZE = 20;

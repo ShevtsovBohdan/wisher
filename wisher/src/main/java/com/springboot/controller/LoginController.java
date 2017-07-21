@@ -11,6 +11,14 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class LoginController {
 
+    /**
+     * Returns the page where users logging occurs.
+     *
+     * @param error parameter that informs about entering incorrect data.
+     * @param logout parameter that informs about user logout.
+     * @param model transfers parameters to the page that would be shown.
+     * @return name of the page that would be shown.
+     */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String getLoginPage(@RequestParam(value = "error", required = false) String error,
                                @RequestParam(value = "logout", required = false) String logout,

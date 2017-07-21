@@ -15,17 +15,16 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * ManageUserImpl is a base class for database connection and working with User object
+ * ManageUserImpl is a base class for database connection and working with User object.
  */
-
 @Component
 public class ManageUserImpl implements ManageUser {
 
     /**
-     * Returns a User object by username from the database or null if such username wasn't found
+     * Returns a User object by username from the database or null if such username wasn't found.
      *
-     * @param uName the name of user that will be returned
-     * @return User object or null
+     * @param uName the name of user that will be returned.
+     * @return User object or null.
      */
     @Override
     public User findbyUserName(String uName) {
@@ -52,14 +51,14 @@ public class ManageUserImpl implements ManageUser {
     }
 
     /**
-     * Create User object with adjusted parameters and save it to the database
+     * Create User object with adjusted parameters and save it to the database.
      * <p>
-     * Returns the id of the saved User object in database
+     * Returns the id of the saved User object in database.
      *
-     * @param username the name of the user that you want to be saved to database
-     * @param password the password of the user that you want to be saved to database
-     * @param auth     the role of the user that you want to be saved to database
-     * @return the id of the saved User object in database
+     * @param username the name of the user that you want to be saved to database.
+     * @param password the password of the user that you want to be saved to database.
+     * @param auth     the role of the user that you want to be saved to database.
+     * @return the id of the saved User object in database.
      */
     @Override
     public Integer addUser(String username, String password, String auth) {
@@ -87,9 +86,9 @@ public class ManageUserImpl implements ManageUser {
     }
 
     /**
-     * Returns the list of User objects that have been saved to the database
+     * Returns the list of User objects that have been saved to the database.
      *
-     * @return the list of User objects that have been saved to the database
+     * @return the list of User objects that have been saved to the database.
      */
     @Override
     public List<User> listUsers() {
@@ -108,27 +107,5 @@ public class ManageUserImpl implements ManageUser {
         }
         return users;
     }
-
-    @Override
-    public long numberOfRows() {
-        BigInteger numbToLong = new BigInteger("1");
-        Session session = HibernateUnil.getSessionFactory().openSession();
-        try {
-            session.beginTransaction();
-            String hql = "select count(username) from users";
-            SQLQuery query = session.createSQLQuery(hql);
-            List numb = query.list();
-            numbToLong = (BigInteger) numb.get(0);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            if (session.getTransaction() != null) session.getTransaction().rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-            return numbToLong.longValue();
-        }
-
-    }
-
 }
 

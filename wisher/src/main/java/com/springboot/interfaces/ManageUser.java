@@ -14,6 +14,4 @@ public interface ManageUser {
 
     public List<User> listUsers();
 
-    public long numberOfRows();
-
 }

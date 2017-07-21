@@ -5,15 +5,11 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <title>home</title>
     <style>
         p{
             color:red;
         }
 
-        ul li{
-            display: inline;
-        }
     </style>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -23,10 +19,11 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 <div class="container-fluid">
-    <form class="form-horizontal" method="post" th:object="${wishValidation}">
+    <form class="form-horizontal" action="/view?page=1" method="post" th:object="${wishValidation}">
         <!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
         <div class="form-group" style="margin-top:20px">
             <label class="control-label col-sm-2" for="wish">Your wish:</label>
@@ -81,7 +78,7 @@
             <td ><a th:text="${wish.link}" th:href="@{|${wish.link}|}" ></a></td>
             <!--<td ><a href="#" th:href="@{wish.link}"></a></td>-->
             <td>
-                <button type="button" th:onclick="'deleteWish(\'' +  ${wish.wishID} + '\', \'' +  ${viewPageNumb} + '\')'"
+                <button type="button" th:onclick="'deleteWish(\'' +  ${wish.wishID} + '\')'"
                         class="btn btn-danger custom-width">Remove
                 </button>
             </td>
@@ -89,16 +86,12 @@
         </tbody>
     </table>
 
-    <ul th:align="center">
-        <li th:each="page : ${#numbers.sequence( 1, __${rowsNumber}__)}"><a th:text="${page}" th:href="@{|/view?page=${page}|}"></a></li>
-    </ul>
-
 
 </div>
 <script>
 
-    function deleteWish(id, pageNumb) {
-        location.href = '/deletewish/' + id + "?" + "page=" + pageNumb;
+    function deleteWish(id) {
+        location.href = '/deletewish/' + id + "?" + "page=" + 1;
     }
 </script>
 

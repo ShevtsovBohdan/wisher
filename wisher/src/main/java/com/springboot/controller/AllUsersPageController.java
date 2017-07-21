@@ -1,6 +1,5 @@
 package com.springboot.controller;
 
-
 import com.springboot.domain.User;
 import com.springboot.domain.Wish;
 import com.springboot.interfaces.ManageUser;
@@ -16,21 +15,27 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * AllUsersPageController is the handler class that takes in requests for overviewing all user's wishes.
+ */
 @Controller
 public class AllUsersPageController {
     @Autowired
     private ManageWish manageWish;
 
-    @Autowired
-    private ManageUser manageUser;
-
-    long attributeRowsNumberValue = 0;
-
     private static final int MAX_ELEMENTS_ON_THE_PAGE = 15;
 
+    /**
+     * Handle requests for overviewing all user's wishes.
+     *
+     * @param startValue sets start point for the table where returning objects start takes.
+     * @param model transfers parameters to the page that would be shown.
+     * @return name of the page that would be shown.
+     */
     @RequestMapping(value = "/checkallusers/{startValue}", method = RequestMethod.GET)
     public String getAllUsers(@PathVariable(value = "startValue") Integer startValue,
                               Model model) {
+        long attributeRowsNumberValue = 0;
 
         List<Wish> wishList = new LinkedList<>();
         List<User> userList = new LinkedList<>();

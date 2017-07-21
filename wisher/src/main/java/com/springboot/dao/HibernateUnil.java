@@ -5,10 +5,10 @@ import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
 
 /**
- * Class that used for creating SessionFactory object for realization of database query
+ * Class that used for creating SessionFactory object for realization of database query.
  */
 public class HibernateUnil {
-    private static final SessionFactory sessionFactory;
+    public static final SessionFactory sessionFactory;
 
     static {
         try {
@@ -20,9 +20,9 @@ public class HibernateUnil {
     }
 
     /**
-     * Returns Session Factory object
+     * Returns Session Factory object.
      *
-     * @return Session Factory object
+     * @return Session Factory object.
      */
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
