@@ -30,8 +30,8 @@
             </div>
             <div class="panel-body">
 
-                <div class="alert alert-info" th:if="${checkforpass}" role="alert">Password wasn't confirm</div>
-                <div class="alert alert-info" th:if="${userfound}" role="alert">Such username already exist</div>
+                <div class="alert alert-info" th:if="${checkPassword}" role="alert">Password wasn't confirm</div>
+                <div class="alert alert-info" th:if="${userFound}" role="alert">Such username already exist</div>
 
 
                 <form class="form-horizontal" method="post" th:object="${registrationValidation}">

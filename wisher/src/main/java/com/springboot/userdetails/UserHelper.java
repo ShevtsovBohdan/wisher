@@ -1,10 +1,10 @@
-package com.springboot.services;
+package com.springboot.userdetails;
 
 
 import org.springframework.security.core.userdetails.User;
 
 /**
- * Class Wrapper to org.springframework.security.core.userdetails.User;
+ * Class Wrapper to org.springframework.security.core.UserDetails.User;
  */
 public class UserHelper{
     User user;

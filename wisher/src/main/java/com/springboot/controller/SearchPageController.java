@@ -1,11 +1,12 @@
 package com.springboot.controller;
 
+import com.springboot.components.ListOrganizer;
 import com.springboot.domain.User;
 import com.springboot.domain.Wish;
 import com.springboot.interfaces.ManageUser;
 import com.springboot.interfaces.ManageWish;
 import com.springboot.models.WishValidation;
-import com.springboot.services.UserHelper;
+import com.springboot.userdetails.UserHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,8 +15,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import java.util.Iterator;
-import java.util.LinkedList;
+
 import java.util.List;
 
 /**
@@ -27,11 +27,13 @@ public class SearchPageController {
     private ManageUser manageUser;
     @Autowired
     private ManageWish manageWish;
+    @Autowired
+    private ListOrganizer listOrganizer;
 
     /**
-     * Returns data about user the was logged in.
+     * Returns data about user that was logged in.
      *
-     * @return data about user the was logged in.
+     * @return data about user that was logged in.
      */
     public User getActiveUser() {
 
@@ -51,14 +53,12 @@ public class SearchPageController {
     @RequestMapping(value = "/view/search", method = RequestMethod.GET)
     public String getSearchPage(@ModelAttribute com.springboot.models.TakeDataFromTheInputHelper searchData,
                                 ModelMap model) {
-
         String searchRequest = searchData.getSearchRequest();
 
         if (searchRequest == ""){
             return "redirect:/view?page=1";
         }
         List<Wish> searchResultList = manageWish.search(getActiveUser().userID, searchRequest);
-
         model.addAttribute("list", searchResultList);
         model.addAttribute(new WishValidation());
 
@@ -81,21 +81,9 @@ public class SearchPageController {
         if (searchRequest == ""){
             return "redirect:/checkallusers/1";
         }
-
         List<Wish> searchResultList = manageWish.searchAllWishes(searchRequest);
-
-        List<User> userList = new LinkedList<>();
-
-        Iterator<Wish> iterator = searchResultList.iterator();
-
-        while(iterator.hasNext()){
-            Wish wish = iterator.next();
-            if(userList.contains(wish.getUser())){
-
-            }else{
-                userList.add(wish.getUser());
-            }
-        }
+        List<User> userList;
+        userList = listOrganizer.shape(searchResultList);
 
         model.addAttribute("listWishes", searchResultList);
         model.addAttribute("listUsers", userList);

@@ -7,7 +7,7 @@ import org.hibernate.cfg.Configuration;
 /**
  * Class that used for creating SessionFactory object for realization of database query.
  */
-public class HibernateUnil {
+public class HibernateUtil {
     public static final SessionFactory sessionFactory;
 
     static {

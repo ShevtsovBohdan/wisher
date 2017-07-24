@@ -1,13 +1,13 @@
 package com.springboot.controller;
 
-import com.springboot.dao.ManageWishImpl;
+import com.springboot.components.PageNumberCounter;
 import com.springboot.domain.User;
 import com.springboot.domain.Wish;
 import com.springboot.interfaces.ManageUser;
 import com.springboot.interfaces.ManageWish;
-import com.springboot.models.TakeAWish;
+import com.springboot.models.RequestParameters;
 import com.springboot.models.WishValidation;
-import com.springboot.services.UserHelper;
+import com.springboot.userdetails.UserHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,24 +23,29 @@ import java.util.List;
 /**
  * MainPageController is the handler class that takes in requests for overviewing main page.
  */
+//rename
 @Controller
-public class MainPageController {
+public class UserPageController {
 
     @Autowired
     private ManageUser manageUser;
     @Autowired
     private ManageWish manageWish;
+    @Autowired
+    private PageNumberCounter pageNumberCounter;
 
-    private final static int defaultPageNumber = 1;
+    //Use proper style
+    private final static int DEFAULT_PAGE_NUMBER = 1;
 
     /**
-     * Returns data about user the was logged in.
+     * Returns data about user that was logged in.
      *
-     * @return data about user the was logged in.
+     * @return data about user that was logged in.
      */
     public User getActiveUser() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        //Inject me
         UserHelper user = new UserHelper(authentication.getPrincipal()) ;
         User activeUser = manageUser.findbyUserName(user.getUsername());
         return activeUser;
@@ -60,29 +65,21 @@ public class MainPageController {
     /**
      * Handle requests for overviewing main page.
      *
-     * @param viewPageNumb sets the page number where wishes are overviewing.
-     * @param searchData sets part of the wish name on which the search will be carried out.
      * @param model transfers parameters to the page that would be shown.
      * @return name of the page that would be shown.
      */
+    //Use command for params
     @RequestMapping(value = "/view", method = RequestMethod.GET)
-    public String getMainPage(@RequestParam(value = "page") Integer viewPageNumb,
-                              @ModelAttribute() com.springboot.models.TakeDataFromTheInputHelper searchData,
+    public String getMainPage(RequestParameters requestParameters,
                               ModelMap model) {
-        long attributeRowsNumberValue = 0;
-        Long numberOfRows = manageWish.numberOfRows(getActiveUser().userID);
-        attributeRowsNumberValue = (numberOfRows + ManageWishImpl.MAX_ELEMENT_ON_THE_PAGE - 1) / ManageWishImpl.MAX_ELEMENT_ON_THE_PAGE;
 
-        List<Wish> activeWishesList = manageWish.listWishes(viewPageNumb, getActiveUser().userID);
+        List<Wish> activeWishesList = manageWish.listWishes(requestParameters.getPage(), getActiveUser().userID);
 
-        if (attributeRowsNumberValue == 0) {
-           attributeRowsNumberValue = 1;
-        }
-        model.addAttribute("rowsNumber", attributeRowsNumberValue);
+        model.addAttribute("rowsNumber", pageNumberCounter.countForMainPage());
         model.addAttribute(new WishValidation());
 
         model.addAttribute("list", activeWishesList);
-        model.addAttribute("viewPageNumb", viewPageNumb);
+        model.addAttribute("viewPageNumb", requestParameters.getPage());
 
         return "home";
 
@@ -91,31 +88,24 @@ public class MainPageController {
     /**
      * Handle requests for adding wish to the list.
      *
-     * @param viewPageNumb sets the page number where wishes are overviewing.
-     * @param takeAWish takes the wish properties from the form.
      * @param wishValidation verifies the correctness of the entered data.
      * @param bindingResult contains validation results.
      * @param model transfers parameters to the page that would be shown.
      * @return name of the page that would be shown.
      */
+    //Use command for params
     @RequestMapping(value = "/view", method = RequestMethod.POST)
-    public String putWish(@RequestParam(value = "page") Integer viewPageNumb,
-                          @ModelAttribute("takeAWish") TakeAWish takeAWish,
+    public String putWish(RequestParameters requestParameters,
                           @Valid WishValidation wishValidation, BindingResult bindingResult,
                           ModelMap model) {
         if (!bindingResult.hasErrors()) {
-            manageWish.addWish(takeAWish.getName(), takeAWish.getLink(), getActiveUser());
+            manageWish.addWish(wishValidation.getName(), wishValidation.getLink(), getActiveUser());
         }
-        List<Wish> activeWishesList = manageWish.listWishes(defaultPageNumber, getActiveUser().userID);
+        List<Wish> activeWishesList = manageWish.listWishes(DEFAULT_PAGE_NUMBER, getActiveUser().userID);
         model.addAttribute("list", activeWishesList);
 
-        Long numberOfRows = manageWish.numberOfRows(getActiveUser().userID);
-        long attributeRowsNumberValue = (numberOfRows + ManageWishImpl.MAX_ELEMENT_ON_THE_PAGE - 1) / ManageWishImpl.MAX_ELEMENT_ON_THE_PAGE;
-        if (attributeRowsNumberValue == 0) {
-            attributeRowsNumberValue = 1;
-        }
-        model.addAttribute("rowsNumber", attributeRowsNumberValue);
-        model.addAttribute("viewPageNumb", viewPageNumb);
+        model.addAttribute("rowsNumber", pageNumberCounter.countForMainPage());
+        model.addAttribute("viewPageNumb", requestParameters.getPage());
         return "home";
 
     }

@@ -3,7 +3,7 @@ package com.springboot.domain;
 import javax.persistence.*;
 
 /**
- * Persistent class that would be saved to the database
+ * Java POJO class that will be persisted to the database
  */
 @Entity
 @Table(name = "wishes")

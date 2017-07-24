@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,6 +19,8 @@ import java.util.List;
 public class ManageWishImpl implements ManageWish {
     public static final int MAX_ELEMENT_ON_THE_PAGE = 10;
     public static final int MAX_SEARCH_RESULT = 20;
+
+
 
     /**
      * Create Wish object by received parameters and saves it to the database.
@@ -33,7 +34,7 @@ public class ManageWishImpl implements ManageWish {
      */
     @Override
     public Integer addWish(String wishName, String wishLink, User activeUser) {
-        Session session = HibernateUnil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
 
         Integer wishAddedID = null;
 
@@ -62,7 +63,7 @@ public class ManageWishImpl implements ManageWish {
      */
     @Override
     public void deleteWish(int wishID) {
-        Session session = HibernateUnil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         String hql = "DELETE FROM Wish WHERE wishID = :wishID";
         Query query = session.createQuery(hql);
         query.setParameter("wishID", wishID);
@@ -85,7 +86,7 @@ public class ManageWishImpl implements ManageWish {
      */
     @Override
     public List<Wish> listWishes() {
-        Session session = HibernateUnil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         List wishes = new LinkedList<Wish>();
         try {
             session.beginTransaction();
@@ -112,7 +113,7 @@ public class ManageWishImpl implements ManageWish {
     public List<Wish> listWishes(int setStartValue, int userID) {
         List wishes = new LinkedList<Wish>();
         Long numberOfRows = numberOfRows(userID);
-        Session session = HibernateUnil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
             String sql = "select * from wishes where userID = :userID order by userID limit :limit, :offset";
@@ -149,7 +150,7 @@ public class ManageWishImpl implements ManageWish {
     @Override
     public List<Wish> listAllUsersWishes(int setStartValue, int maxValue) {
         List wishes = new LinkedList<Wish>();
-        Session session = HibernateUnil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
             String sql = "select * from wishes order by userID limit :limit, :offset";
@@ -180,7 +181,7 @@ public class ManageWishImpl implements ManageWish {
     @Override
     public long numberOfRows(int userID) {
         BigInteger numbToLong = new BigInteger("1");
-        Session session = HibernateUnil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
             String hql = "select count(userID) from wishes WHERE userID = :userID";
@@ -207,7 +208,8 @@ public class ManageWishImpl implements ManageWish {
     @Override
     public long numberOfRows() {
         BigInteger numbToLong = new BigInteger("1");
-        Session session = HibernateUnil.getSessionFactory().openSession();
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
             String hql = "select count(userID) from wishes";
@@ -220,8 +222,9 @@ public class ManageWishImpl implements ManageWish {
             e.printStackTrace();
         } finally {
             session.close();
-            return numbToLong.longValue();
+
         }
+        return numbToLong.longValue();
 
     }
 
@@ -234,7 +237,7 @@ public class ManageWishImpl implements ManageWish {
      */
     @Override
     public List<Wish> search(int userID, String searchStr) {
-        Session session = HibernateUnil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         List searchResultList = new LinkedList<Wish>();
         try {
             session.beginTransaction();
@@ -266,7 +269,7 @@ public class ManageWishImpl implements ManageWish {
      */
     @Override
     public List<Wish> searchAllWishes(String searchStr) {
-        Session session = HibernateUnil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         List searchResultList = new LinkedList<Wish>();
         try {
             session.beginTransaction();

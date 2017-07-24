@@ -9,7 +9,6 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Component;
 import org.hibernate.*;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -29,7 +28,7 @@ public class ManageUserImpl implements ManageUser {
     @Override
     public User findbyUserName(String uName) {
         User user = null;
-        Session session = HibernateUnil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
 
         try {
             session.beginTransaction();
@@ -62,7 +61,7 @@ public class ManageUserImpl implements ManageUser {
      */
     @Override
     public Integer addUser(String username, String password, String auth) {
-        Session session = HibernateUnil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
 
         Integer userID = null;
 
@@ -92,7 +91,7 @@ public class ManageUserImpl implements ManageUser {
      */
     @Override
     public List<User> listUsers() {
-        Session session = HibernateUnil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         List users = new ArrayList<User>();
         try {
             session.beginTransaction();

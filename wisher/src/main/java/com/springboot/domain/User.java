@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
- * Persistent class that would be saved to the database
+ * Java POJO class that will be persisted to the database
  */
 @Entity
 @Table(name = "users")
