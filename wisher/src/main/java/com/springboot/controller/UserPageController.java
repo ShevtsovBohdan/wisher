@@ -1,10 +1,11 @@
 package com.springboot.controller;
 
-import com.springboot.components.PageNumberCounter;
+import com.springboot.components.PageNumberCounterImpl;
 import com.springboot.domain.User;
 import com.springboot.domain.Wish;
 import com.springboot.interfaces.ManageUser;
 import com.springboot.interfaces.ManageWish;
+import com.springboot.interfaces.PageNumberCounter;
 import com.springboot.models.RequestParameters;
 import com.springboot.models.WishValidation;
 import com.springboot.userdetails.UserHelper;
@@ -70,8 +71,12 @@ public class UserPageController {
      */
     //Use command for params
     @RequestMapping(value = "/view", method = RequestMethod.GET)
-    public String getMainPage(RequestParameters requestParameters,
+    public String getMainPage(@Valid RequestParameters requestParameters, BindingResult bindingResult,
                               ModelMap model) {
+
+        if(bindingResult.hasErrors()){
+            return "redirect:/view?page=1";
+        }
 
         List<Wish> activeWishesList = manageWish.listWishes(requestParameters.getPage(), getActiveUser().userID);
 

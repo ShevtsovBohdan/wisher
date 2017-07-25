@@ -25,6 +25,7 @@ public class DeleteWishController {
     @RequestMapping(value = {"/deletewish/{wishID}"}, method = RequestMethod.GET)
     public String deleteWish(RequestParameters requestParameters) {
 
+
         manageWish.deleteWish(requestParameters.getWishID());
         return "redirect:/view?page="+ requestParameters.getPage();
     }

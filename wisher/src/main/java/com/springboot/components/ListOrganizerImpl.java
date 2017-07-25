@@ -2,6 +2,7 @@ package com.springboot.components;
 
 import com.springboot.domain.User;
 import com.springboot.domain.Wish;
+import com.springboot.interfaces.ListOrganizer;
 import org.springframework.stereotype.Component;
 
 import java.util.Iterator;
@@ -12,7 +13,7 @@ import java.util.List;
  * Class is used for organizing List of Users using Wish List from the database.
  */
 @Component
-public class ListOrganizer {
+public class ListOrganizerImpl implements ListOrganizer{
 
     /**
      * Returns List of users according specified Wish List.
@@ -20,6 +21,7 @@ public class ListOrganizer {
      * @param wishList gets List of wishes from the database
      * @return List of Users
      */
+    @Override
     public List<User> shape(List<Wish> wishList) {
         List<User> userList = new LinkedList<>();
 

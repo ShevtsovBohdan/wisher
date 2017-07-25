@@ -44,4 +44,8 @@ public class TakeDataFromTheInputHelper {
     public void setSearch(String search) {
         this.search = search;
     }
+
+    public Boolean isSearchRequestEmpty() {
+        return search == "" ? true : false;
+    }
 }

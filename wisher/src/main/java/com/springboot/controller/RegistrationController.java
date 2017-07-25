@@ -45,6 +45,7 @@ public class RegistrationController {
             try {
                 manageUser.addUser(registrationValidation.getUsername(), registrationValidation.getPassword(), "USER");
             } catch (ConstraintViolationException e) {
+                System.out.println("Exception(use lo4j)" + e.getMessage());
                 return "redirect:/registration?userFound";
             }
         }

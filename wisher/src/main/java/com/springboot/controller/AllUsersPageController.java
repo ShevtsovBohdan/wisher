@@ -1,17 +1,20 @@
 package com.springboot.controller;
 
-import com.springboot.components.ListOrganizer;
-import com.springboot.components.PageNumberCounter;
+import com.springboot.components.PageNumberCounterImpl;
 import com.springboot.domain.Wish;
+import com.springboot.interfaces.ListOrganizer;
 import com.springboot.interfaces.ManageWish;
+import com.springboot.interfaces.PageNumberCounter;
 import com.springboot.models.RequestParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -36,9 +39,14 @@ public class AllUsersPageController {
      * @return name of the page that would be shown.
      */
     @RequestMapping(value = "/checkallusers/{startValue}", method = RequestMethod.GET)
-    public String getAllUsers(RequestParameters requestParameters, Model model) {
+    public String getAllUsers(@Valid RequestParameters requestParameters, BindingResult bindingResult,
+                              Model model) {
+        if(bindingResult.hasErrors()){
+            return "redirect:/checkallusers/1";
+        }
+
         List<Wish> wishList;
-        wishList = manageWish.listAllUsersWishes(requestParameters.getStartValue(), PageNumberCounter.MAX_ELEMENTS_ON_THE_ALLUSERS_PAGE);
+        wishList = manageWish.listAllUsersWishes(requestParameters.getStartValue(), PageNumberCounterImpl.MAX_ELEMENTS_ON_THE_ALLUSERS_PAGE);
 
         model.addAttribute("rowsNumber", pageNumberCounter.countForAllUsersPage());
 

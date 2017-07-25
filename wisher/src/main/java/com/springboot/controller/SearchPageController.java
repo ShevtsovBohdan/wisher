@@ -1,8 +1,8 @@
 package com.springboot.controller;
 
-import com.springboot.components.ListOrganizer;
 import com.springboot.domain.User;
 import com.springboot.domain.Wish;
+import com.springboot.interfaces.ListOrganizer;
 import com.springboot.interfaces.ManageUser;
 import com.springboot.interfaces.ManageWish;
 import com.springboot.models.WishValidation;
@@ -55,7 +55,7 @@ public class SearchPageController {
                                 ModelMap model) {
         String searchRequest = searchData.getSearchRequest();
 
-        if (searchRequest == ""){
+        if (searchData.isSearchRequestEmpty()){
             return "redirect:/view?page=1";
         }
         List<Wish> searchResultList = manageWish.search(getActiveUser().userID, searchRequest);
@@ -78,7 +78,7 @@ public class SearchPageController {
 
         String searchRequest = searchData.getSearchRequest();
 
-        if (searchRequest == ""){
+        if (searchData.isSearchRequestEmpty()){
             return "redirect:/checkallusers/1";
         }
         List<Wish> searchResultList = manageWish.searchAllWishes(searchRequest);
