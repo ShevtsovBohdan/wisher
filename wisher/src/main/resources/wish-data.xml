@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <wishes wishID="1" userID = "1" wishName = "wish1" link = "http://www.marcphilipp.de/blog/2012/03/13/database-tests-with-dbunit-part-1/"/>
+    <wishes wishID="2" userID = "1" wishName = "wish2" link = "http://www.marcphilipp.de/blog/2012/03/13/database-tests-with-dbunit-part-1/"/>
+    <!--<wishes wishID="3" userID = "2" wishName = "wish3" link = "http://www.marcphilipp.de/blog/2012/03/13/database-tests-with-dbunit-part-1/"/>-->
+</dataset>

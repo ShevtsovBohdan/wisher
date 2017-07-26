@@ -241,6 +241,7 @@ public class ManageWishImpl implements ManageWish {
         List searchResultList = new LinkedList<Wish>();
         try {
             session.beginTransaction();
+
             String hql = "select * from wishes where userID = :userID and wishName like :searchStr limit :limit, :offset";
             SQLQuery query = session.createSQLQuery(hql);
             query.addEntity(Wish.class);

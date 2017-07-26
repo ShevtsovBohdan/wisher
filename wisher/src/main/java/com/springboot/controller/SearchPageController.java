@@ -2,6 +2,7 @@ package com.springboot.controller;
 
 import com.springboot.domain.User;
 import com.springboot.domain.Wish;
+import com.springboot.interfaces.GetUser;
 import com.springboot.interfaces.ListOrganizer;
 import com.springboot.interfaces.ManageUser;
 import com.springboot.interfaces.ManageWish;
@@ -29,19 +30,8 @@ public class SearchPageController {
     private ManageWish manageWish;
     @Autowired
     private ListOrganizer listOrganizer;
-
-    /**
-     * Returns data about user that was logged in.
-     *
-     * @return data about user that was logged in.
-     */
-    public User getActiveUser() {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserHelper user = new UserHelper(authentication.getPrincipal()) ;
-        User activeUser = manageUser.findbyUserName(user.getUsername());
-        return activeUser;
-    }
+    @Autowired
+    private GetUser getUser;
 
     /**
      * Handle requests about searching wishes of concrete user.
@@ -58,7 +48,7 @@ public class SearchPageController {
         if (searchData.isSearchRequestEmpty()){
             return "redirect:/view?page=1";
         }
-        List<Wish> searchResultList = manageWish.search(getActiveUser().userID, searchRequest);
+        List<Wish> searchResultList = manageWish.search(getUser.getActiveUser().userID, searchRequest);
         model.addAttribute("list", searchResultList);
         model.addAttribute(new WishValidation());
 

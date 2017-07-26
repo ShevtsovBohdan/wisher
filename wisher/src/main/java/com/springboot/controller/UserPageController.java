@@ -3,6 +3,7 @@ package com.springboot.controller;
 import com.springboot.components.PageNumberCounterImpl;
 import com.springboot.domain.User;
 import com.springboot.domain.Wish;
+import com.springboot.interfaces.GetUser;
 import com.springboot.interfaces.ManageUser;
 import com.springboot.interfaces.ManageWish;
 import com.springboot.interfaces.PageNumberCounter;
@@ -34,23 +35,11 @@ public class UserPageController {
     private ManageWish manageWish;
     @Autowired
     private PageNumberCounter pageNumberCounter;
+    @Autowired
+    private GetUser getUser;
 
     //Use proper style
     private final static int DEFAULT_PAGE_NUMBER = 1;
-
-    /**
-     * Returns data about user that was logged in.
-     *
-     * @return data about user that was logged in.
-     */
-    public User getActiveUser() {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //Inject me
-        UserHelper user = new UserHelper(authentication.getPrincipal()) ;
-        User activeUser = manageUser.findbyUserName(user.getUsername());
-        return activeUser;
-    }
 
     /**
      * Returns URL of the main page.
@@ -78,7 +67,7 @@ public class UserPageController {
             return "redirect:/view?page=1";
         }
 
-        List<Wish> activeWishesList = manageWish.listWishes(requestParameters.getPage(), getActiveUser().userID);
+        List<Wish> activeWishesList = manageWish.listWishes(requestParameters.getPage(), getUser.getActiveUser().userID);
 
         model.addAttribute("rowsNumber", pageNumberCounter.countForMainPage());
         model.addAttribute(new WishValidation());
@@ -104,9 +93,9 @@ public class UserPageController {
                           @Valid WishValidation wishValidation, BindingResult bindingResult,
                           ModelMap model) {
         if (!bindingResult.hasErrors()) {
-            manageWish.addWish(wishValidation.getName(), wishValidation.getLink(), getActiveUser());
+            manageWish.addWish(wishValidation.getName(), wishValidation.getLink(), getUser.getActiveUser());
         }
-        List<Wish> activeWishesList = manageWish.listWishes(DEFAULT_PAGE_NUMBER, getActiveUser().userID);
+        List<Wish> activeWishesList = manageWish.listWishes(DEFAULT_PAGE_NUMBER, getUser.getActiveUser().userID);
         model.addAttribute("list", activeWishesList);
 
         model.addAttribute("rowsNumber", pageNumberCounter.countForMainPage());

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <users userID="1" username="user" password="pass" authorities="USER"/>
+    <users userID="2" username="user123" password="pass123" authorities="USER"/>
+</dataset>

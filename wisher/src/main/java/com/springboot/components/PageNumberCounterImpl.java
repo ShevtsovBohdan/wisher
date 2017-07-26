@@ -2,6 +2,7 @@ package com.springboot.components;
 
 import com.springboot.dao.ManageWishImpl;
 import com.springboot.domain.User;
+import com.springboot.interfaces.GetUser;
 import com.springboot.interfaces.ManageUser;
 import com.springboot.interfaces.ManageWish;
 import com.springboot.interfaces.PageNumberCounter;
@@ -19,23 +20,10 @@ public class PageNumberCounterImpl implements PageNumberCounter{
     public static final int MAX_ELEMENTS_ON_THE_ALLUSERS_PAGE = 15;
 
     @Autowired
-    ManageWish manageWish;
+    public ManageWish manageWish;
+
     @Autowired
-    ManageUser manageUser;
-
-    /**
-     * Returns data about user that was logged in.
-     *
-     * @return data about user that was logged in.
-     */
-    @Override
-    public User getActiveUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserHelper user = new UserHelper(authentication.getPrincipal()) ;
-        User activeUser = manageUser.findbyUserName(user.getUsername());
-        return activeUser;
-    }
-
+    public GetUser getUser;
     /**
      * Return pagination for page where all users wishes displayed
      *
@@ -65,7 +53,7 @@ public class PageNumberCounterImpl implements PageNumberCounter{
     @Override
     public long countForMainPage(){
         long numberOfPages;
-        Long numberOfRows = manageWish.numberOfRows(getActiveUser().userID);
+        Long numberOfRows = manageWish.numberOfRows(getUser.getActiveUser().userID);
 
         if (numberOfRows < ManageWishImpl.MAX_ELEMENT_ON_THE_PAGE){
             numberOfPages = 1;
