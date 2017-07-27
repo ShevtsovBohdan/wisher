@@ -59,19 +59,15 @@ public class WishTest extends DBUnitConfig{
 
     @Test
     public void testSearch() throws Exception{
-        List<Wish> wishes = manageWish.search(1,"wish1");
+        List<Wish> wishes = manageWish.search(1,"wi");
 
-        Assert.assertEquals(1, wishes.size());
+        Assert.assertEquals(2, wishes.size());
     }
 
     @Test
-    public void testlistWishes() throws Exception{
+    public void testListWishes() throws Exception{
         List<Wish> wishes = manageWish.listWishes(0, 1);
 
-        IDataSet expectedData = new FlatXmlDataSetBuilder().build(
-                Thread.currentThread().getContextClassLoader()
-                        .getResourceAsStream("wish-data-expected.xml"));
-
-        Assert.assertEquals(expectedData.getTable("wishes"), wishes);
+        Assert.assertEquals(2, wishes.size());
     }
 }

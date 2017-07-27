@@ -40,6 +40,7 @@ public class UserTest extends DBUnitConfig{
             IDataSet actualData = tester.getConnection().createDataSet();
 //            Assertion.assertEquals(expectedData, actualData);
             Assert.assertEquals(expectedData.getTable("users").getRowCount(), users.size());
+
         }
 
 }

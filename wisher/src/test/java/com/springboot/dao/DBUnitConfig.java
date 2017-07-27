@@ -46,9 +46,9 @@ public class DBUnitConfig extends DBTestCase {
         return beforeData;
     }
 
-//    @Override
-//    protected DatabaseOperation getTearDownOperation() throws Exception {
-//        return DatabaseOperation.DELETE_ALL;
-//    }
+    @Override
+    protected DatabaseOperation getTearDownOperation() throws Exception {
+        return DatabaseOperation.DELETE_ALL;
+    }
 
 }
