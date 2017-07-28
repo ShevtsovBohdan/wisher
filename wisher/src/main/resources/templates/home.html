@@ -29,18 +29,18 @@
     <form class="form-horizontal" method="post" th:object="${wishValidation}">
         <!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
         <div class="form-group" style="margin-top:20px">
-            <label class="control-label col-sm-2" for="wish">Your wish:</label>
+            <label class="control-label col-sm-2" for="wishName">Your wish:</label>
             <div class="col-sm-5">
-                <input type="name" class="form-control" id="wish" placeholder="Wish"
-                       name="name"/>
-                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                <input type="text" class="form-control" id="wishName" placeholder="Wish"
+                       name="wishName" th:field="*{wishName}" />
+                <p th:if="${#fields.hasErrors('wishName')}" th:errors="*{wishName}" ></p>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="link"></label>
             <div class="col-sm-5">
-                <input type="link" class="form-control" id="link" placeholder="Link"
-                       name="link"/>
+                <input type="text" class="form-control" id="link" placeholder="Link"
+                       name="link" th:field="*{link}"/>
                 <p th:if="${#fields.hasErrors('link')}" th:errors="*{link}"></p>
             </div>
         </div>
@@ -77,12 +77,12 @@
 
 
         <tr th:each="wish: ${list}">
-            <td  th:text="${wish.wishName}"></td>
-            <td ><a th:text="${wish.link}" th:href="@{|${wish.link}|}" ></a></td>
+            <td  th:text="${wish.wishName}" th:id="${wish.wishName}" name="wishName"></td>
+            <td th:id="${wish.link}" name="wishLink"><a th:text="${wish.link}" th:href="@{|${wish.link}|}" ></a></td>
             <!--<td ><a href="#" th:href="@{wish.link}"></a></td>-->
             <td>
                 <button type="button" th:onclick="'deleteWish(\'' +  ${wish.wishID} + '\', \'' +  ${viewPageNumb} + '\')'"
-                        class="btn btn-danger custom-width">Remove
+                        class="btn btn-danger custom-width" th:name="${wish.wishName}">Remove
                 </button>
             </td>
         </tr>

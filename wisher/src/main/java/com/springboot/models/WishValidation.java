@@ -15,17 +15,17 @@ public class WishValidation {
     @NotNull
     @Size(min = WishName_MIN_SIZE, max = WishName_MAX_SIZE,  message = "{name.size}")
     @Pattern(regexp = "^[a-zA-Z ]+$", message = "{wishName.onlyLatinSymbols}")
-    public String name;
+    public String wishName;
 
     @Pattern(regexp = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]", message = "{link.onlyLink}")
     public String link;
 
-    public String getName() {
-        return name;
+    public String getWishName() {
+        return wishName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setWishName(String wishName) {
+        this.wishName = wishName;
     }
 
     public String getLink() {

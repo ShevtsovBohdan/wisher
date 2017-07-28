@@ -93,7 +93,7 @@ public class UserPageController {
                           @Valid WishValidation wishValidation, BindingResult bindingResult,
                           ModelMap model) {
         if (!bindingResult.hasErrors()) {
-            manageWish.addWish(wishValidation.getName(), wishValidation.getLink(), getUser.getActiveUser());
+            manageWish.addWish(wishValidation.getWishName(), wishValidation.getLink(), getUser.getActiveUser());
         }
         List<Wish> activeWishesList = manageWish.listWishes(DEFAULT_PAGE_NUMBER, getUser.getActiveUser().userID);
         model.addAttribute("list", activeWishesList);
