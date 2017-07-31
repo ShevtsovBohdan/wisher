@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * DeleteUserController is the handler class that takes in requests for deleting wishes.
@@ -22,11 +23,17 @@ public class DeleteWishController {
      * @return the URL for the page where the wishes can be overviewing.
      */
     //Use command
-    @RequestMapping(value = {"/deletewish/{wishID}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/deletewish"}, method = RequestMethod.POST)
+    @ResponseBody
     public String deleteWish(RequestParameters requestParameters) {
 
 
-        manageWish.deleteWish(requestParameters.getWishID());
-        return "redirect:/view?page="+ requestParameters.getPage();
+//        manageWish.deleteWish(requestParameters.getWishID());
+//        return "redirect:/view?page="+ requestParameters.getPage();
+
+        manageWish.deleteWish(requestParameters.getDeleteWishId());
+        return "Okey";
     }
+
+
 }

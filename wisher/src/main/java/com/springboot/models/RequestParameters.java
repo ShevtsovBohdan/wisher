@@ -14,6 +14,8 @@ public class RequestParameters {
     @Pattern(regexp = "[0-9]+")
     private String page;
 
+    private String deleteWishId;
+
     public Integer getStartValue() {
         return Integer.parseInt(startValue);
     }
@@ -39,5 +41,13 @@ public class RequestParameters {
     }
 
     public RequestParameters() {
+    }
+
+    public Integer getDeleteWishId() {
+        return Integer.parseInt(deleteWishId);
+    }
+
+    public void setDeleteWishId(String deleteWishId) {
+        this.deleteWishId = deleteWishId;
     }
 }
