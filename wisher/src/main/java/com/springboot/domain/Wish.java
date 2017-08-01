@@ -22,6 +22,16 @@ public class Wish {
     @Column(name = "link")
     private String link;
 
+    private String wishLocalLink;
+
+    public String getWishLocalLink() {
+        return wishLocalLink;
+    }
+
+    public void setWishLocalLink(String wishLocalLink) {
+        this.wishLocalLink = wishLocalLink;
+    }
+
     public int getWishID() {
         return wishID;
     }

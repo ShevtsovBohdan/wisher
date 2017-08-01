@@ -67,6 +67,8 @@
         </div>
     </form>
 
+
+
     <table class="table table-bordered">
         <thead>
         <tr>
@@ -81,7 +83,9 @@
         <tr th:each="wish: ${list}" class="tr">
             <td th:text="${wish.wishName}" th:id="${wish.wishName}" name="wishName"></td>
             <td th:id="${wish.link}" name="wishLink"><a th:text="${wish.link}" th:href="@{|${wish.link}|}"></a></td>
-            <!--<td ><a href="#" th:href="@{wish.link}"></a></td>-->
+            <td><img name="image" th:id="${wish.wishID}" src="file:///home/bohdansh/pictures/resultImage50.jpg" alt="wish" class="img-circle" width="250" height="200"/></td>
+            <td style="border-left-style:hidden"><input type="file" th:id="${wish.wishID}"/></td>
+            <td><button type = "button" th:onclick="'addLink(\'' +  ${wish.wishID} + '\')'">Add image</button></td>
             <td>
                 <button type="button"
                         th:onclick="'deleteWish(\'' +  ${wish.wishID} + '\', \'' +  ${wish.wishName} + '\', \'' +  ${viewPageNumb} + '\')'"
@@ -101,5 +105,6 @@
 </div>
 
 <script src="/js/deleteWish.js"></script>
+<script src="/js/hideImageWithoutSrc.js"></script>
 </body>
 </html>
