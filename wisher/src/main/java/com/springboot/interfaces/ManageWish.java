@@ -27,4 +27,8 @@ public interface ManageWish {
     List<Wish> search(int userID, String searchStr);
 
     List<Wish> searchAllWishes(String searchStr);
+
+    void saveWishLocalLink(int wishID, String wishLocalLink);
+
+    String getWishLocalLink(int wishID);
 }

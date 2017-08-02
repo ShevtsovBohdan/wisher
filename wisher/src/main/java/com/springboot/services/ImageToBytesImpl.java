@@ -18,13 +18,12 @@ public class ImageToBytesImpl implements ImageToBytes{
     @Override
     public String reformat(byte[] byteArray, Integer wishID) throws IOException{
 
-
         BufferedImage resultImage = ImageIO.read(new ByteArrayInputStream(byteArray));
 
-        String localPath = "/home/bohdansh/pictures/resultImage" + wishID +".jpg";
+        String pathForSaving = "/home/bohdansh/pictures/resultImage" + wishID +".jpg";
 
-        ImageIO.write(resultImage, "jpg", new File(localPath));
+        ImageIO.write(resultImage, "jpg", new File(pathForSaving));
 
-        return localPath;
+        return pathForSaving;
     }
 }

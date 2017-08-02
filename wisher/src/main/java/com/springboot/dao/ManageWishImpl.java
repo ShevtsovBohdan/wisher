@@ -291,4 +291,47 @@ public class ManageWishImpl implements ManageWish {
             return searchResultList;
         }
     }
+
+
+    @Override
+    public void saveWishLocalLink(int wishID, String wishLocalLink) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            String sql = "update wishes set wishLocalLink = :wishLocalLink where wishID = :wishID";
+            SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(Wish.class);
+            query.setParameter("wishLocalLink", wishLocalLink);
+            query.setParameter("wishID", wishID);
+            query.executeUpdate();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            if (session.getTransaction() != null) session.getTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public String getWishLocalLink(int wishID) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String pathToImage = "";
+        try {
+            session.beginTransaction();
+            String sql = "select wishLocalLink from wishes where wishID = :wishID";
+            SQLQuery query = session.createSQLQuery(sql);
+//            query.addEntity(Wish.class);
+            query.setParameter("wishID", wishID);
+            List list = query.list();
+            pathToImage = (String)list.get(0);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            if (session.getTransaction() != null) session.getTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+            return pathToImage;
+        }
+    }
 }

@@ -3,20 +3,19 @@ function addLink(wishID) {
 
     var fd = new FormData();
     fd.append('file', getInput);
+    fd.append('wishID', wishID);
 
     $.ajax({
         type: 'POST',
         url: '/addLocalLink',
         data: fd,
         contentType: false,
-        async: false,
         cache: false,
         processData:false,
-        success: function (data) {
-            $("img[id = " + wishID +"]").src = "http://localhost/" + data;
+        success: function(data) {
+            $("img[id = " + wishID +"]").attr('src', "data:image/jpg;base64," + data)
         },
-        error: function (data) {
-            alert("error");
+        error: function(data) {
         }
     });
 }

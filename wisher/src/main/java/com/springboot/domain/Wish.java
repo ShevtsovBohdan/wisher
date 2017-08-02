@@ -22,6 +22,7 @@ public class Wish {
     @Column(name = "link")
     private String link;
 
+    @Column(name = "wishLocalLink")
     private String wishLocalLink;
 
     public String getWishLocalLink() {
