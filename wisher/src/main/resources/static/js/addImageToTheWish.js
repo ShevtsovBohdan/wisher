@@ -16,6 +16,18 @@ function addLink(wishID) {
             $("img[id = " + wishID +"]").attr('src', "data:image/jpg;base64," + data)
         },
         error: function(data) {
+            alert(data.responseText);
+        },
+        statusCode: {
+            404: function (response) {
+                alert(response.responseText);
+            },
+            417: function (response) {
+                alert(response.responseText);
+            },
+            431: function (response) {
+                alert(response.responseText);
+            }
         }
     });
 }

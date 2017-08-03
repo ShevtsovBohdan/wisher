@@ -334,4 +334,23 @@ public class ManageWishImpl implements ManageWish {
             return pathToImage;
         }
     }
+
+    public void saveOriginalImageWish(Integer wishID, String originalName){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            String sql = "update wishes set imageOriginalName = :originalName where wishID = :wishID";
+            SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(Wish.class);
+            query.setParameter("originalName", originalName);
+            query.setParameter("wishID", wishID);
+            query.executeUpdate();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            if (session.getTransaction() != null) session.getTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
 }

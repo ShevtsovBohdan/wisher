@@ -31,4 +31,6 @@ public interface ManageWish {
     void saveWishLocalLink(int wishID, String wishLocalLink);
 
     String getWishLocalLink(int wishID);
+
+    void saveOriginalImageWish(Integer wishID, String originalName);
 }

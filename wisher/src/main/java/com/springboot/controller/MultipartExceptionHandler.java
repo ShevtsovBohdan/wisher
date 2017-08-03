@@ -1,0 +1,18 @@
+package com.springboot.controller;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.multipart.MultipartException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+@ControllerAdvice
+public class MultipartExceptionHandler {
+    @ExceptionHandler(MultipartException.class)
+    public ResponseEntity<String> handleMultipartException(MultipartException e) {
+
+        return new ResponseEntity<String>("Very large file", HttpStatus.REQUEST_HEADER_FIELDS_TOO_LARGE);
+
+    }
+}

@@ -25,6 +25,17 @@ public class Wish {
     @Column(name = "wishLocalLink")
     private String wishLocalLink;
 
+    @Column(name = "imageOriginalName")
+    private String imageOriginalName;
+
+    public String getImageOriginalName() {
+        return imageOriginalName;
+    }
+
+    public void setImageOriginalName(String imageOriginalName) {
+        this.imageOriginalName = imageOriginalName;
+    }
+
     public String getWishLocalLink() {
         return wishLocalLink;
     }
