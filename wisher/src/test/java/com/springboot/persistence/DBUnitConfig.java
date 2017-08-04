@@ -1,4 +1,4 @@
-package com.springboot.dao;
+package com.springboot.persistence;
 
 
 import org.dbunit.DBTestCase;

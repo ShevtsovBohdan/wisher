@@ -1,8 +1,7 @@
-package com.springboot.dao;
+package com.springboot.persistence;
 
 import com.springboot.domain.User;
 import com.springboot.interfaces.ManageUser;
-import org.dbunit.Assertion;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.junit.Assert;

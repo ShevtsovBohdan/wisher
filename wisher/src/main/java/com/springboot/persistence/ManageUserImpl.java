@@ -1,4 +1,4 @@
-package com.springboot.dao;
+package com.springboot.persistence;
 
 import com.springboot.domain.User;
 

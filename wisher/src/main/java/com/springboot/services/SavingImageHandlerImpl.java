@@ -14,6 +14,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
+
+/**
+ * Class that used for saving files to local directory and file's path in the database
+ */
 @Component
 public class SavingImageHandlerImpl implements SavingImageHandler {
     public static final String LOCAL_PATH_OF_THE_IMAGE = "/home/bohdansh/pictures/resultImage";
@@ -21,8 +25,16 @@ public class SavingImageHandlerImpl implements SavingImageHandler {
     @Autowired
     private ManageWish manageWish;
 
+    /**
+     * Saves images to the local directory.
+     *
+     * @param byteArray image's byte array for saving it to the directory.
+     * @param imageExtension sets extension of the image.
+     * @return path to the image that was saved.
+     * @throws IOException if an error occurs during image's reading or writing.
+     */
     @Override
-    public String saveImageToTheDirectory(byte[] byteArray, Integer wishID, String imageExtension) throws IOException{
+    public String saveImageToTheDirectory(byte[] byteArray, String imageExtension) throws IOException{
 
         BufferedImage resultImage = ImageIO.read(new ByteArrayInputStream(byteArray));
 
@@ -33,12 +45,28 @@ public class SavingImageHandlerImpl implements SavingImageHandler {
         return pathForSaving;
     }
 
+    /**
+     * Saves path to the image in database.
+     *
+     * @param fileBytes image's byte array.
+     * @param wishID ID of the wish to which image will be saved.
+     * @param imageExtension extension of the image.
+     * @param originalName original name of the image that was uploaded by user.
+     * @throws IOException if an error occurs during image's reading or writing.
+     */
     @Override
     public void saveImageLocationToDataBase(byte[] fileBytes, Integer wishID, String imageExtension, String originalName) throws IOException {
-        manageWish.saveWishLocalLink(wishID, saveImageToTheDirectory(fileBytes, wishID, imageExtension));
+        manageWish.saveWishLocalLink(wishID, saveImageToTheDirectory(fileBytes, imageExtension));
         manageWish.saveOriginalImageWish(wishID, originalName);
     }
 
+    /**
+     * Gives commands for saving image.
+     *
+     * @param file sets image.
+     * @param wishID sets ID of the wish to which image will be saved.
+     * @throws IOException sets ID of the wish to which image will be saved.
+     */
     @Override
     public void saveImageToTheDirectoryAndToTheDataBase(MultipartFile file, Integer wishID) throws IOException{
         saveImageLocationToDataBase(file.getBytes(), wishID,

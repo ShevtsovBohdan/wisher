@@ -1,7 +1,6 @@
-package com.springboot.dao;
+package com.springboot.persistence;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
 
 /**

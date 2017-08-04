@@ -7,7 +7,7 @@ function addLink(wishID) {
 
     $.ajax({
         type: 'POST',
-        url: '/addLocalLink',
+        url: '/saveImage',
         data: fd,
         contentType: false,
         cache: false,

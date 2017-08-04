@@ -24,6 +24,9 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <!--<script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>-->
+    <link rel="stylesheet" href="/css/dropzone.css"/>
+
 
 
 
@@ -88,12 +91,7 @@
             <td th:id="${wish.link}" name="wishLink"><a th:text="${wish.link}" th:href="@{|${wish.link}|}"></a></td>
             <td><img name="image" th:id="${wish.wishID}" th:src= "'data:image/jpg;base64,' + ${@encoder.encode(wish.wishID)}" alt="wish" class="img-circle" width="250" height="200"/></td>
             <td style="border-left-style:hidden">
-                <form class="dropzone"
-                      id="my-awesome-dropzone">
-                    <!--<div class="fallback">-->
-                        <!--<input name="file" type="file" th:id="${wish.wishID}"/>-->
-                    <!--</div>-->
-                </form>
+                    <input type="file" class="dropzone" th:id="${wish.wishID}"/>
 
             </td>
             <td style="border-left-style:hidden"><button type = "button" th:onclick="'addLink(\'' +  ${wish.wishID} + '\')'">Add image</button></td>

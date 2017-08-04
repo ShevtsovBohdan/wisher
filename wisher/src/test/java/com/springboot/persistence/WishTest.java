@@ -1,9 +1,7 @@
-package com.springboot.dao;
+package com.springboot.persistence;
 
 
-import com.springboot.domain.User;
 import com.springboot.domain.Wish;
-import com.springboot.interfaces.ManageUser;
 import com.springboot.interfaces.ManageWish;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;

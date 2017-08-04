@@ -22,8 +22,8 @@ public class Wish {
     @Column(name = "link")
     private String link;
 
-    @Column(name = "wishLocalLink")
-    private String wishLocalLink;
+    @Column(name = "wishLocalPath")
+    private String wishLocalPath = "/home/bohdansh/IdeaProjects/wisher-master/wisher/src/main/resources/static/images/images.png";
 
     @Column(name = "imageOriginalName")
     private String imageOriginalName;
@@ -36,12 +36,12 @@ public class Wish {
         this.imageOriginalName = imageOriginalName;
     }
 
-    public String getWishLocalLink() {
-        return wishLocalLink;
+    public String getWishLocalPath() {
+        return wishLocalPath;
     }
 
-    public void setWishLocalLink(String wishLocalLink) {
-        this.wishLocalLink = wishLocalLink;
+    public void setWishLocalPath(String wishLocalPath) {
+        this.wishLocalPath = wishLocalPath;
     }
 
     public int getWishID() {

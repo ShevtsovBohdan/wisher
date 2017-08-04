@@ -1,4 +1,4 @@
-package com.springboot.dao;
+package com.springboot.persistence;
 
 import com.springboot.domain.User;
 import com.springboot.domain.Wish;
@@ -292,16 +292,21 @@ public class ManageWishImpl implements ManageWish {
         }
     }
 
-
+    /**
+     * Sets path to the image in database.
+     *
+     * @param wishID ID of the wish to which image will be saved.
+     * @param wishLocalPath path to the image that was saved.
+     */
     @Override
-    public void saveWishLocalLink(int wishID, String wishLocalLink) {
+    public void saveWishLocalLink(int wishID, String wishLocalPath) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            String sql = "update wishes set wishLocalLink = :wishLocalLink where wishID = :wishID";
+            String sql = "update wishes set wishLocalPath = :wishLocalLink where wishID = :wishID";
             SQLQuery query = session.createSQLQuery(sql);
             query.addEntity(Wish.class);
-            query.setParameter("wishLocalLink", wishLocalLink);
+            query.setParameter("wishLocalPath", wishLocalPath);
             query.setParameter("wishID", wishID);
             query.executeUpdate();
             session.getTransaction().commit();
@@ -313,13 +318,19 @@ public class ManageWishImpl implements ManageWish {
         }
     }
 
+    /**
+     * Returns path to the image from database.
+     *
+     * @param wishID ID of the wish for which path to the image will be returned.
+     * @return path to the image from database.
+     */
     @Override
     public String getWishLocalLink(int wishID) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         String pathToImage = "";
         try {
             session.beginTransaction();
-            String sql = "select wishLocalLink from wishes where wishID = :wishID";
+            String sql = "select wishLocalPath from wishes where wishID = :wishID";
             SQLQuery query = session.createSQLQuery(sql);
 //            query.addEntity(Wish.class);
             query.setParameter("wishID", wishID);
@@ -335,13 +346,20 @@ public class ManageWishImpl implements ManageWish {
         }
     }
 
+    /**
+     * Sets original name of the image to database.
+     *
+     * @param wishID ID of the wish to which image's name will be saved.
+     * @param originalName original name of the image.
+     */
+    @Override
     public void saveOriginalImageWish(Integer wishID, String originalName){
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
             String sql = "update wishes set imageOriginalName = :originalName where wishID = :wishID";
             SQLQuery query = session.createSQLQuery(sql);
-            query.addEntity(Wish.class);
+//            query.addEntity(Wish.class);
             query.setParameter("originalName", originalName);
             query.setParameter("wishID", wishID);
             query.executeUpdate();

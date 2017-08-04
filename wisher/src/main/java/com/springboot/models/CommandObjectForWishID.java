@@ -1,11 +1,11 @@
 package com.springboot.models;
 
-import org.springframework.stereotype.Component;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-
+/**
+ * Class that used for receiving parameter information from the saving image requests.
+ */
 public class CommandObjectForWishID {
     @NotNull
     @Pattern(regexp = "^\\d+$", message = "{wishID.onlyNumbers}")

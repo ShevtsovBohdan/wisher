@@ -1,10 +1,11 @@
 package com.springboot.models;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import javax.validation.constraints.Pattern;
 
-
+/**
+ * Class that used for receiving parameter information from the user's requests.
+ */
 @Component
 public class RequestParameters {
     @Pattern(regexp = "[0-9]")

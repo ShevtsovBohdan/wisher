@@ -22,15 +22,9 @@ public class DeleteWishController {
      *
      * @return the URL for the page where the wishes can be overviewing.
      */
-    //Use command
     @RequestMapping(value = {"/deletewish"}, method = RequestMethod.POST)
     @ResponseBody
     public String deleteWish(RequestParameters requestParameters) {
-
-
-//        manageWish.deleteWish(requestParameters.getWishID());
-//        return "redirect:/view?page="+ requestParameters.getPage();
-
         manageWish.deleteWish(requestParameters.getDeleteWishId());
         return "Okey";
     }

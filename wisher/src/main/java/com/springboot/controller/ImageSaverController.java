@@ -15,6 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
+
+/**
+ * RegistrationController is the handler class that takes in requests for saving image to the wish.
+ */
 @Controller
 public class ImageSaverController {
 
@@ -27,15 +31,22 @@ public class ImageSaverController {
     @Autowired
     private FileConverter fileConverter;
 
-
-    @RequestMapping(value = "/addLocalLink", method = RequestMethod.POST)
+    /**
+     * Handles requests for saving image to the local directory and path to this picture to database
+     *
+     * @param file file that user wants to save.
+     * @param commandObjectForWishID ID of the wish to which image will be saved.
+     * @param bindingResult Retrieve incorrect data about wish ID.
+     * @return byte code of the image if file was valid and error code when file was invalid.
+     * @throws Exception in case of access errors (if the temporary store fails).
+     */
+    @RequestMapping(value = "/saveImage", method = RequestMethod.POST)
     @ExceptionHandler(MultipartException.class)
     public ResponseEntity<String> addWishLink(@RequestParam(value = "file", required = false) MultipartFile file,
                                               @Valid CommandObjectForWishID commandObjectForWishID, BindingResult bindingResult) throws Exception{
 
         if(bindingResult.hasErrors()){
-            String ss = bindingResult.getFieldError().getField();
-            return new ResponseEntity<>(bindingResult.getFieldError().getField(), HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(bindingResult.getAllErrors().get(0).getDefaultMessage(), HttpStatus.EXPECTATION_FAILED);
         }
 
         if(file == null){

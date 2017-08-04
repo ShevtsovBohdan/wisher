@@ -87,7 +87,6 @@ public class UserPageController {
      * @param model transfers parameters to the page that would be shown.
      * @return name of the page that would be shown.
      */
-    //Use command for params
     @RequestMapping(value = "/view", method = RequestMethod.POST)
     public String putWish(RequestParameters requestParameters,
                           @Valid WishValidation wishValidation, BindingResult bindingResult,

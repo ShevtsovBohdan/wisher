@@ -1,15 +1,10 @@
 package com.springboot.components;
 
-import com.springboot.dao.ManageWishImpl;
-import com.springboot.domain.User;
+import com.springboot.persistence.ManageWishImpl;
 import com.springboot.interfaces.GetUser;
-import com.springboot.interfaces.ManageUser;
 import com.springboot.interfaces.ManageWish;
 import com.springboot.interfaces.PageNumberCounter;
-import com.springboot.userdetails.UserHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 /**

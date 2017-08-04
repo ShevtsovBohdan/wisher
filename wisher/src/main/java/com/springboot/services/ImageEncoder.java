@@ -2,33 +2,35 @@ package com.springboot.services;
 
 
 import com.springboot.interfaces.ManageWish;
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import java.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import sun.misc.IOUtils;
-
-import javax.imageio.ImageIO;
-import javax.persistence.Convert;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
 
+/**
+ * Class that encodes image in Base64 format.
+ */
 public class ImageEncoder {
 
     @Autowired
     private ManageWish manageWish;
 
+    /**
+     * Gets path to the image from the database and returns encoded image or null if image wasn't found
+     *
+     * @param wishID ID of the wish for which image need to be encoded
+     * @return encoded image or null if image wasn't found
+     * @throws Exception if an I/O error occurs.
+     */
     public String encode(Integer wishID) throws Exception {
         try {
-
             File file = new File(manageWish.getWishLocalLink(wishID));
             byte[] bytesArray = new byte[(int) file.length()];
             FileInputStream fis = new FileInputStream(file);
             fis.read(bytesArray);
             fis.close();
 
-            String encodedImage = java.util.Base64.getEncoder().encodeToString(bytesArray);
+            String encodedImage = Base64.getEncoder().encodeToString(bytesArray);
 
             return encodedImage;
         } catch (NullPointerException e) {
