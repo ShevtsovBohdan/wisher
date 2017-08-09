@@ -24,6 +24,11 @@ public class RegistrationValidation {
     @Size(min = PASSWORD_MIN_SIZE, max = PASSWORD_MAX_SIZE, message = "{password.invalidSize}")
     @Pattern(regexp = "^[a-zA-Z ]+$", message = "{password.onlyLatinSymbols}")
     private String password;
+//TODO enable this
+//    @NotNull
+//    @Size(min = PASSWORD_MIN_SIZE, max = PASSWORD_MAX_SIZE, message = "{password.invalidSize}")
+//    @Pattern(regexp = "^[a-zA-Z ]+$", message = "{password.onlyLatinSymbols}")
+//    private String password;
 
     public String getUsername() {
         return username;

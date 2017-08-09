@@ -1,8 +1,8 @@
-package com.springboot.services;
+package com.springboot.services.impl;
 
 
-import com.springboot.interfaces.ManageWish;
-import com.springboot.interfaces.SavingImageHandler;
+import com.springboot.persistence.interfaces.ManageWish;
+import com.springboot.services.interfaces.SavingImageHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +20,7 @@ import java.util.Date;
  */
 @Component
 public class SavingImageHandlerImpl implements SavingImageHandler {
+    //TODO path for one PC
     public static final String LOCAL_PATH_OF_THE_IMAGE = "/home/bohdansh/pictures/resultImage";
 
     @Autowired

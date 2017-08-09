@@ -1,6 +1,6 @@
-package com.springboot.config;
+package com.springboot.configuration;
 
-import com.springboot.services.UserServiceImpl;
+import com.springboot.services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

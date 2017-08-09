@@ -1,8 +1,8 @@
-package com.springboot.services;
+package com.springboot.services.impl;
 
 import com.springboot.domain.User;
-import com.springboot.interfaces.ManageUser;
-import com.springboot.interfaces.UserService;
+import com.springboot.persistence.interfaces.ManageUser;
+import com.springboot.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

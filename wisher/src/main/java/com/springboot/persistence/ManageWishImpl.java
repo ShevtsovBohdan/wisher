@@ -2,7 +2,8 @@ package com.springboot.persistence;
 
 import com.springboot.domain.User;
 import com.springboot.domain.Wish;
-import com.springboot.interfaces.ManageWish;
+import com.springboot.persistence.HibernateUtil;
+import com.springboot.persistence.interfaces.ManageWish;
 import org.hibernate.*;
 
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import java.util.List;
  * ManageWishImpl is a base class for database connection and working with Wish object.
  */
 @Component
+//TODO It is a DAO (WishDao)
 public class ManageWishImpl implements ManageWish {
     public static final int MAX_ELEMENT_ON_THE_PAGE = 10;
     public static final int MAX_SEARCH_RESULT = 20;
@@ -73,6 +75,7 @@ public class ManageWishImpl implements ManageWish {
             session.getTransaction().commit();
         } catch (Exception e) {
             if (session.getTransaction() != null) session.getTransaction().rollback();
+            //TODO add log4j
             e.printStackTrace();
         } finally {
             session.close();

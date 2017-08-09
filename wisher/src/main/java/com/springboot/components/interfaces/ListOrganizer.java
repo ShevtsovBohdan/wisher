@@ -1,4 +1,4 @@
-package com.springboot.interfaces;
+package com.springboot.components.interfaces;
 
 
 import com.springboot.domain.User;

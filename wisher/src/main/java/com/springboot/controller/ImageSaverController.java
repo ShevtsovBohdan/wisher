@@ -1,8 +1,8 @@
 package com.springboot.controller;
 
-import com.springboot.interfaces.FileConverter;
-import com.springboot.interfaces.FileTypeVerification;
-import com.springboot.interfaces.SavingImageHandler;
+import com.springboot.services.interfaces.FileConverter;
+import com.springboot.services.interfaces.FileTypeVerification;
+import com.springboot.services.interfaces.SavingImageHandler;
 import com.springboot.models.CommandObjectForWishID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,7 +56,6 @@ public class ImageSaverController {
                 return new ResponseEntity<>("Incorrect type of file", HttpStatus.EXPECTATION_FAILED);
             }
         }
-
 
         savingImageHandler.saveImageToTheDirectoryAndToTheDataBase(file, Integer.parseInt(commandObjectForWishID.getWishID()));
 

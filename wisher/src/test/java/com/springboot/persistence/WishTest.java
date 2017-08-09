@@ -2,7 +2,7 @@ package com.springboot.persistence;
 
 
 import com.springboot.domain.Wish;
-import com.springboot.interfaces.ManageWish;
+import com.springboot.persistence.interfaces.ManageWish;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.junit.Assert;
@@ -16,10 +16,9 @@ public class WishTest extends DBUnitConfig{
 
     @Before
     public void setUp() throws Exception {
-        super.setUp();
         beforeData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
-                        .getResourceAsStream("wish-data.xml"));
+                        .getResourceAsStream("src/test/wish-data.xml"));
 
         tester.setDataSet(beforeData);
         tester.onSetup();
@@ -35,7 +34,7 @@ public class WishTest extends DBUnitConfig{
 
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
-                        .getResourceAsStream("wish-data.xml"));
+                        .getResourceAsStream("src/test/wish-data.xml"));
 
         Assert.assertEquals(expectedData.getTable("wishes").getRowCount(), numberOfRows);
     }

@@ -1,4 +1,4 @@
-package com.springboot.interfaces;
+package com.springboot.services.interfaces;
 
 
 import org.springframework.security.core.userdetails.UserDetails;

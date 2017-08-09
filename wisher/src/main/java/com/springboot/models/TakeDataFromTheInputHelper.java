@@ -5,13 +5,23 @@ import org.springframework.stereotype.Component;
 /**
  * Class that used for receiving information from the user's registration form
  */
+//TODO it is not a component. It is a POJO or DTO
 @Component
+//TODO change name of class (e.g. UserDataHolder)
 public class TakeDataFromTheInputHelper {
 
     private String username;
     private String password;
+//TODO rename to passwordConfirm
     private String passwordconf;
+
+
+
+    //TODO move to other class (SearchWish)
     private String search;
+
+
+
 
     public String getUsername() {
         return username;

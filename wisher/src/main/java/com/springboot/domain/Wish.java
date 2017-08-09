@@ -19,10 +19,12 @@ public class Wish {
 
     @Column(name = "wishName")
     private String wishName;
+
     @Column(name = "link")
     private String link;
 
     @Column(name = "wishLocalPath")
+    //TODO hard code
     private String wishLocalPath = "/home/bohdansh/IdeaProjects/wisher-master/wisher/src/main/resources/static/images/images.png";
 
     @Column(name = "imageOriginalName")

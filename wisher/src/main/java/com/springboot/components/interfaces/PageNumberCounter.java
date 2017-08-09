@@ -1,4 +1,4 @@
-package com.springboot.interfaces;
+package com.springboot.components.interfaces;
 
 public interface PageNumberCounter {
 

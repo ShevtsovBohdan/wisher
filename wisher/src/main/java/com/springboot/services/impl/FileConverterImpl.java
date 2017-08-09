@@ -1,7 +1,7 @@
-package com.springboot.services;
+package com.springboot.services.impl;
 
 
-import com.springboot.interfaces.FileConverter;
+import com.springboot.services.interfaces.FileConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,7 +12,7 @@ import java.util.Base64;
  * Class that used for encoding image in Base64 format.
  */
 @Component
-public class FileConverterImpl implements FileConverter{
+public class FileConverterImpl implements FileConverter {
     /**
      * Returns encoded image.
      *

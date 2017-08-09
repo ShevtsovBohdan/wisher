@@ -2,7 +2,8 @@ package com.springboot.persistence;
 
 import com.springboot.domain.User;
 
-import com.springboot.interfaces.ManageUser;
+import com.springboot.persistence.HibernateUtil;
+import com.springboot.persistence.interfaces.ManageUser;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;

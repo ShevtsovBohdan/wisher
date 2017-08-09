@@ -1,7 +1,7 @@
 package com.springboot.services;
 
 
-import com.springboot.interfaces.ManageWish;
+import com.springboot.persistence.interfaces.ManageWish;
 import java.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.io.File;
@@ -33,6 +33,7 @@ public class ImageEncoder {
             String encodedImage = Base64.getEncoder().encodeToString(bytesArray);
 
             return encodedImage;
+            //TODO catch only NullPointerException. Add or Exception
         } catch (NullPointerException e) {
             return null;
         }

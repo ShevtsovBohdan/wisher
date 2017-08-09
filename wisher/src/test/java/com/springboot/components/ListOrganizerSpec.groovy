@@ -1,18 +1,9 @@
 package com.springboot.components
 
+import com.springboot.components.impl.ListOrganizerImpl
 import com.springboot.domain.User
 import com.springboot.domain.Wish
-import com.springboot.interfaces.ListOrganizer
 import spock.lang.*
-import sun.security.provider.SHA
-
-import javax.persistence.Column
-import javax.persistence.JoinColumn
-import javax.persistence.ManyToOne
-import java.awt.Shape;
-import java.util.ArrayList;
-import java.util.List;
-
 
 class ListOrganizerSpec extends Specification{
     @Shared

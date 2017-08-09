@@ -1,6 +1,6 @@
 package com.springboot.controller;
 
-import com.springboot.interfaces.ManageUser;
+import com.springboot.persistence.interfaces.ManageUser;
 import com.springboot.models.RegistrationValidation;
 import com.springboot.models.TakeDataFromTheInputHelper;
 import org.hibernate.exception.ConstraintViolationException;

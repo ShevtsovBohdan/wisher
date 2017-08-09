@@ -1,7 +1,7 @@
 package com.springboot.persistence;
 
 import com.springboot.domain.User;
-import com.springboot.interfaces.ManageUser;
+import com.springboot.persistence.interfaces.ManageUser;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.junit.Assert;
@@ -12,6 +12,7 @@ import java.util.List;
 
 public class UserTest extends DBUnitConfig{
         private ManageUser manageUser = new ManageUserImpl();
+
 
         @Before
         public void setUp() throws Exception {
@@ -29,7 +30,7 @@ public class UserTest extends DBUnitConfig{
         }
 
         @Test
-        public void testGetAll() throws Exception {
+        public void testFindbyUserName() throws Exception {
             List<User> users = manageUser.listUsers();
 
             IDataSet expectedData = new FlatXmlDataSetBuilder().build(

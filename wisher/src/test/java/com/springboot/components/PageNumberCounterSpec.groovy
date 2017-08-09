@@ -1,12 +1,7 @@
-import com.springboot.components.PageNumberCounterImpl
+import com.springboot.components.impl.PageNumberCounterImpl
 import com.springboot.domain.User
-import com.springboot.interfaces.GetUser
-import com.springboot.interfaces.ManageUser
-import com.springboot.interfaces.ManageWish
-import com.springboot.interfaces.PageNumberCounter
-import com.springboot.userdetails.UserHelper
-import org.springframework.security.core.context.SecurityContext
-import spock.lang.Shared
+import com.springboot.userdetails.interfaces.GetUser
+import com.springboot.persistence.interfaces.ManageWish
 import spock.lang.Specification
 
 class PageNumberCounterSpec extends Specification{

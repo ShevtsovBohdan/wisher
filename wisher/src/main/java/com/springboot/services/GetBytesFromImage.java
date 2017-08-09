@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
  * Class that user for creation ImageEncoder class.
  */
 @Configuration
+//TODO move to config package
 public class GetBytesFromImage {
 
     /**

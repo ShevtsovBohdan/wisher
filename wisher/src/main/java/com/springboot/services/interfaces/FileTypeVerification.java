@@ -1,4 +1,4 @@
-package com.springboot.interfaces;
+package com.springboot.services.interfaces;
 
 
 import org.springframework.web.multipart.MultipartFile;

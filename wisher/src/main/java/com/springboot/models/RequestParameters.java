@@ -6,7 +6,7 @@ import javax.validation.constraints.Pattern;
 /**
  * Class that used for receiving parameter information from the user's requests.
  */
-@Component
+//TODO it is not a component. It is a POJO or DTO
 public class RequestParameters {
     @Pattern(regexp = "[0-9]")
     private String startValue;

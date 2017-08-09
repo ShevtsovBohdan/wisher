@@ -1,8 +1,8 @@
-package com.springboot.components;
+package com.springboot.components.impl;
 
 import com.springboot.domain.User;
 import com.springboot.domain.Wish;
-import com.springboot.interfaces.ListOrganizer;
+import com.springboot.components.interfaces.ListOrganizer;
 import org.springframework.stereotype.Component;
 
 import java.util.Iterator;

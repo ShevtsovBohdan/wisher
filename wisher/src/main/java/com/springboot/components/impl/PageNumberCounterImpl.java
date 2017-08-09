@@ -1,9 +1,9 @@
-package com.springboot.components;
+package com.springboot.components.impl;
 
 import com.springboot.persistence.ManageWishImpl;
-import com.springboot.interfaces.GetUser;
-import com.springboot.interfaces.ManageWish;
-import com.springboot.interfaces.PageNumberCounter;
+import com.springboot.userdetails.interfaces.GetUser;
+import com.springboot.persistence.interfaces.ManageWish;
+import com.springboot.components.interfaces.PageNumberCounter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

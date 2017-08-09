@@ -1,4 +1,4 @@
-package com.springboot.interfaces;
+package com.springboot.persistence.interfaces;
 
 import com.springboot.domain.User;
 

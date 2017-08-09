@@ -1,10 +1,10 @@
 package com.springboot.controller;
 
-import com.springboot.components.PageNumberCounterImpl;
+import com.springboot.components.impl.PageNumberCounterImpl;
 import com.springboot.domain.Wish;
-import com.springboot.interfaces.ListOrganizer;
-import com.springboot.interfaces.ManageWish;
-import com.springboot.interfaces.PageNumberCounter;
+import com.springboot.components.interfaces.ListOrganizer;
+import com.springboot.persistence.interfaces.ManageWish;
+import com.springboot.components.interfaces.PageNumberCounter;
 import com.springboot.models.RequestParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,8 +45,7 @@ public class AllUsersPageController {
             return "redirect:/checkallusers/1";
         }
 
-        List<Wish> wishList;
-        wishList = manageWish.listAllUsersWishes(requestParameters.getStartValue(), PageNumberCounterImpl.MAX_ELEMENTS_ON_THE_ALLUSERS_PAGE);
+        List<Wish> wishList = manageWish.listAllUsersWishes(requestParameters.getStartValue(), PageNumberCounterImpl.MAX_ELEMENTS_ON_THE_ALLUSERS_PAGE);
 
         model.addAttribute("rowsNumber", pageNumberCounter.countForAllUsersPage());
 

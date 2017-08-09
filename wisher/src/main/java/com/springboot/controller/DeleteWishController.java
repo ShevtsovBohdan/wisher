@@ -1,6 +1,6 @@
 package com.springboot.controller;
 
-import com.springboot.interfaces.ManageWish;
+import com.springboot.persistence.interfaces.ManageWish;
 import com.springboot.models.RequestParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
