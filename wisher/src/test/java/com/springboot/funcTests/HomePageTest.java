@@ -19,10 +19,10 @@ import static org.fluentlenium.core.filter.FilterConstructor.withText;
 
 public class HomePageTest extends FluentTest{
     @Page
-    private HomePage page;
+    public HomePage page;
 
     public WebDriver driver;
-    private WindowAction window;
+    public WindowAction window;
 
     public WebDriver newWebDriver() {
         System.setProperty("webdriver.chrome.driver", "/home/bohdansh/IdeaProjects/chromedriver");

@@ -2,7 +2,6 @@ package com.springboot.persistence;
 
 import com.springboot.domain.User;
 import com.springboot.domain.Wish;
-import com.springboot.persistence.HibernateUtil;
 import com.springboot.persistence.interfaces.ManageWish;
 import org.hibernate.*;
 
@@ -306,7 +305,7 @@ public class ManageWishImpl implements ManageWish {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            String sql = "update wishes set wishLocalPath = :wishLocalLink where wishID = :wishID";
+            String sql = "update wishes set wishLocalPath = :wishLocalPath where wishID = :wishID";
             SQLQuery query = session.createSQLQuery(sql);
             query.addEntity(Wish.class);
             query.setParameter("wishLocalPath", wishLocalPath);

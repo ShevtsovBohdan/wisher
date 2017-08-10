@@ -1,11 +1,14 @@
-package com.springboot.services.impl;
+package com.springboot.services;
 
+import com.springboot.configuration.JpaConfiguration;
 import com.springboot.domain.User;
 import com.springboot.repositories.UserRepository;
 import com.springboot.services.interfaces.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -15,8 +18,8 @@ public class UserDaoImpl implements UserDao{
     private UserRepository userRepository;
 
     @Override
-    public User findByUserName(String userName) {
-        return userRepository.findByUsername(userName);
+    public User findByUsername(String userName) {
+        return userRepository.findByUsername(userName).get(0);
     }
 
     @Override

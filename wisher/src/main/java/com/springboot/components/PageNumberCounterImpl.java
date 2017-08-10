@@ -1,4 +1,4 @@
-package com.springboot.components.impl;
+package com.springboot.components;
 
 import com.springboot.persistence.ManageWishImpl;
 import com.springboot.userdetails.interfaces.GetUser;

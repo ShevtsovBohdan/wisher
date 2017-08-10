@@ -9,7 +9,9 @@ function deleteWish(id, wishName, pageNumb) {
                 deleteWishId: id
             },
             success: function(data){
-                // location.href = "/view?page=" + pageNumb;
+                // if($('.tr').size() < 10 && $("a[id != 1]")){
+                //     $("a[id != 1]").closest("li").remove();
+                // }
                 $("button[id = " + id + "]").closest(".tr").remove();
             }
         });

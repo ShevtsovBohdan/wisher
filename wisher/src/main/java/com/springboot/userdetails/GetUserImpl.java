@@ -1,4 +1,4 @@
-package com.springboot.userdetails.implementations;
+package com.springboot.userdetails;
 
 import com.springboot.domain.User;
 import com.springboot.persistence.interfaces.ManageUser;

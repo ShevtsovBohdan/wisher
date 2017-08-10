@@ -1,6 +1,6 @@
 package com.springboot.controller;
 
-import com.springboot.components.impl.PageNumberCounterImpl;
+import com.springboot.components.PageNumberCounterImpl;
 import com.springboot.domain.Wish;
 import com.springboot.components.interfaces.ListOrganizer;
 import com.springboot.persistence.interfaces.ManageWish;

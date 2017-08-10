@@ -1,8 +1,8 @@
 package com.springboot.controller;
 
 import com.springboot.persistence.interfaces.ManageUser;
-import com.springboot.models.RegistrationValidation;
-import com.springboot.models.TakeDataFromTheInputHelper;
+import com.springboot.models.UserDTO;
+import com.springboot.models.SearchDTO;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,29 +27,25 @@ public class RegistrationController {
      * Handle properties of the user that was entered to the form.
      *
      * @param validForm gets the data from the field named "Confirm Password"
-     * @param registrationValidation verifies the correctness of the entered data.
+     * @param userDTO verifies the correctness of the entered data.
      * @param bindingResult contains validation results.
      * @param model transfers parameters to the page that would be shown.
      * @return name of the page that would be shown.
      */
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String getRegPage(@ModelAttribute TakeDataFromTheInputHelper validForm,
-                             @Valid RegistrationValidation registrationValidation, BindingResult bindingResult,
+    public String getRegPage(@ModelAttribute SearchDTO validForm,
+                             @Valid UserDTO userDTO, BindingResult bindingResult,
                              Model model) {
         if (bindingResult.hasErrors()) {
             return "registration";
-        }
-        if (!validForm.getPasswordconf().equals(registrationValidation.getPassword())) {
-            return "redirect:/registration?checkPassword";
-        } else {
+        }else {
             try {
-                manageUser.addUser(registrationValidation.getUsername(), registrationValidation.getPassword(), "USER");
+                manageUser.addUser(userDTO.getUsername(), userDTO.getPassword(), "USER");
             } catch (ConstraintViolationException e) {
                 System.out.println("Exception(use lo4j)" + e.getMessage());
                 return "redirect:/registration?userFound";
             }
         }
-
         return "redirect:/view/1";
     }
 
@@ -67,7 +63,7 @@ public class RegistrationController {
                              Model model) {
         model.addAttribute("checkPassword", checkPassword != null);
         model.addAttribute("userFound", userFound != null);
-        model.addAttribute(new RegistrationValidation());
+        model.addAttribute(new UserDTO());
         return "registration";
     }
 

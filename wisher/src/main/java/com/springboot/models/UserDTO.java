@@ -1,6 +1,8 @@
 package com.springboot.models;
 
 
+import com.springboot.validator.PasswordMatches;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -8,7 +10,8 @@ import javax.validation.constraints.Size;
 /**
  * Class that used for verification information from the form.
  */
-public class RegistrationValidation {
+@PasswordMatches
+public class UserDTO {
     private static final int PASSWORD_MIN_SIZE = 4;
     private static final int PASSWORD_MAX_SIZE = 20;
     private static final int USERNAME_MIN_SIZE = 4;
@@ -24,11 +27,8 @@ public class RegistrationValidation {
     @Size(min = PASSWORD_MIN_SIZE, max = PASSWORD_MAX_SIZE, message = "{password.invalidSize}")
     @Pattern(regexp = "^[a-zA-Z ]+$", message = "{password.onlyLatinSymbols}")
     private String password;
-//TODO enable this
-//    @NotNull
-//    @Size(min = PASSWORD_MIN_SIZE, max = PASSWORD_MAX_SIZE, message = "{password.invalidSize}")
-//    @Pattern(regexp = "^[a-zA-Z ]+$", message = "{password.onlyLatinSymbols}")
-//    private String password;
+
+    private String passwordConfirm;
 
     public String getUsername() {
         return username;
@@ -44,5 +44,13 @@ public class RegistrationValidation {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 }

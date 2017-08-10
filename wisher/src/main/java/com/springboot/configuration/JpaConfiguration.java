@@ -1,18 +1,19 @@
 package com.springboot.configuration;
 
-import org.hibernate.ejb.HibernatePersistence;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
 import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
+@EnableJpaRepositories("com.springboot.repositories")
 @ComponentScan("com.springboot")
 public class JpaConfiguration {
 
@@ -30,7 +31,7 @@ public class JpaConfiguration {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(conferenceDataSource());
-        entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistence.class);
+        entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
         Properties jpaProperties = new Properties();
         jpaProperties.setProperty("hibernate.connection.characterEncoding", "utf8");
         jpaProperties.setProperty("hibernate.connection.useUnicode", "true");
@@ -38,7 +39,7 @@ public class JpaConfiguration {
         jpaProperties.setProperty("show_sql", "true");
         jpaProperties.setProperty("format_sql", "false");
 
-        entityManagerFactoryBean.setPackagesToScan("domain");
+        entityManagerFactoryBean.setPackagesToScan("com.springboot.domain");
 
         entityManagerFactoryBean.setJpaProperties(jpaProperties);
 

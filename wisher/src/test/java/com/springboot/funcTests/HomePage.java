@@ -11,7 +11,7 @@ public class HomePage extends FluentPage{
 
     @Override
     public String getUrl() {
-        return "http://localhost:8085/view?page=1";
+        return "http://localhost:8080/view?page=1";
     }
 
     @Override

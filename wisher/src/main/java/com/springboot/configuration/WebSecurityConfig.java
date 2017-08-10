@@ -1,6 +1,6 @@
 package com.springboot.configuration;
 
-import com.springboot.services.impl.UserServiceImpl;
+import com.springboot.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -31,8 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    @Autowired
-    private UserServiceImpl userServiceImpl;
+    private UserServiceImpl userServiceImpl = new UserServiceImpl();
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

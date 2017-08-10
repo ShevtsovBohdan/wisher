@@ -1,4 +1,4 @@
-import com.springboot.components.impl.PageNumberCounterImpl
+import com.springboot.components.PageNumberCounterImpl
 import com.springboot.domain.User
 import com.springboot.userdetails.interfaces.GetUser
 import com.springboot.persistence.interfaces.ManageWish

@@ -1,6 +1,5 @@
 package com.springboot.components
 
-import com.springboot.components.impl.ListOrganizerImpl
 import com.springboot.domain.User
 import com.springboot.domain.Wish
 import spock.lang.*

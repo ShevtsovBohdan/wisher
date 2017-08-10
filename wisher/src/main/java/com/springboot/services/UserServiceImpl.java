@@ -1,9 +1,9 @@
-package com.springboot.services.impl;
+package com.springboot.services;
 
 import com.springboot.domain.User;
+import com.springboot.persistence.ManageUserImpl;
 import com.springboot.persistence.interfaces.ManageUser;
 import com.springboot.services.interfaces.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,8 +21,7 @@ public class UserServiceImpl implements UserService {
 
     private User user = new User();
 
-    @Autowired
-    private ManageUser manageUser;
+    private ManageUser manageUser = new ManageUserImpl();
 
     /**
      * Returns UserDetails object that contains information about user loaded from the database by username

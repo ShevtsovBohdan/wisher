@@ -38,7 +38,7 @@ public class SearchPageController {
      * @return name of the page that would be shown.
      */
     @RequestMapping(value = "/view/search", method = RequestMethod.GET)
-    public String getSearchPage(@ModelAttribute com.springboot.models.TakeDataFromTheInputHelper searchData,
+    public String getSearchPage(@ModelAttribute com.springboot.models.SearchDTO searchData,
                                 ModelMap model) {
         String searchRequest = searchData.getSearchRequest();
 
@@ -60,7 +60,7 @@ public class SearchPageController {
      * @return name of the page that would be shown.
      */
     @RequestMapping(value = "/view/searchall", method = RequestMethod.GET)
-    public String getSearchAllUsersPage(@ModelAttribute com.springboot.models.TakeDataFromTheInputHelper searchData,
+    public String getSearchAllUsersPage(@ModelAttribute com.springboot.models.SearchDTO searchData,
                                 ModelMap model) {
 
         String searchRequest = searchData.getSearchRequest();

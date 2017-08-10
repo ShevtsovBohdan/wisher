@@ -1,5 +1,6 @@
-package com.springboot.services;
+package com.springboot.configuration;
 
+import com.springboot.services.ImageEncoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -7,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
  * Class that user for creation ImageEncoder class.
  */
 @Configuration
-//TODO move to config package
 public class GetBytesFromImage {
 
     /**

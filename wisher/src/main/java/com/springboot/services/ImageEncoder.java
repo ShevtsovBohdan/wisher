@@ -2,6 +2,8 @@ package com.springboot.services;
 
 
 import com.springboot.persistence.interfaces.ManageWish;
+
+import java.io.IOException;
 import java.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.io.File;
@@ -19,10 +21,9 @@ public class ImageEncoder {
      * Gets path to the image from the database and returns encoded image or null if image wasn't found
      *
      * @param wishID ID of the wish for which image need to be encoded
-     * @return encoded image or null if image wasn't found
-     * @throws Exception if an I/O error occurs.
+     * @return encoded image or null if image wasn't found.
      */
-    public String encode(Integer wishID) throws Exception {
+    public String encode(Integer wishID){
         try {
             File file = new File(manageWish.getWishLocalLink(wishID));
             byte[] bytesArray = new byte[(int) file.length()];
@@ -33,8 +34,7 @@ public class ImageEncoder {
             String encodedImage = Base64.getEncoder().encodeToString(bytesArray);
 
             return encodedImage;
-            //TODO catch only NullPointerException. Add or Exception
-        } catch (NullPointerException e) {
+        } catch (NullPointerException | IOException e) {
             return null;
         }
 

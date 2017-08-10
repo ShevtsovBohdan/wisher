@@ -2,13 +2,13 @@ package com.springboot.persistence;
 
 import com.springboot.domain.User;
 
-import com.springboot.persistence.HibernateUtil;
 import com.springboot.persistence.interfaces.ManageUser;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.stereotype.Component;
 import org.hibernate.*;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,8 +17,10 @@ import java.util.List;
 /**
  * ManageUserImpl is a base class for database connection and working with User object.
  */
-@Component
+@Service
 public class ManageUserImpl implements ManageUser {
+
+    static Logger log = Logger.getLogger(ManageUserImpl.class.getName());
 
     /**
      * Returns a User object by username from the database or null if such username wasn't found.
@@ -28,6 +30,7 @@ public class ManageUserImpl implements ManageUser {
      */
     @Override
     public User findbyUserName(String uName) {
+        log.info("Starting find user");
         User user = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
 
@@ -42,10 +45,12 @@ public class ManageUserImpl implements ManageUser {
             }
             session.getTransaction().commit();
         } catch (Exception e) {
+            log.error("Exception throws", new Exception("Exception"));
             if (session.getTransaction() != null) session.getTransaction().rollback();
             e.printStackTrace();
         } finally {
             session.close();
+            log.info("User found");
             return user;
         }
     }
@@ -62,6 +67,7 @@ public class ManageUserImpl implements ManageUser {
      */
     @Override
     public Integer addUser(String username, String password, String auth) {
+        log.info("Starting add user");
         Session session = HibernateUtil.getSessionFactory().openSession();
 
         Integer userID = null;
@@ -77,10 +83,12 @@ public class ManageUserImpl implements ManageUser {
         } catch (ConstraintViolationException e) {
             throw (e);
         } catch (Exception e) {
+            log.error("Exception throws", new Exception("Exception"));
             if (session.getTransaction() != null) session.getTransaction().rollback();
             e.printStackTrace();
         } finally {
             session.close();
+            log.info("User was added successfully");
         }
         return userID;
     }
@@ -92,6 +100,7 @@ public class ManageUserImpl implements ManageUser {
      */
     @Override
     public List<User> listUsers() {
+        log.info("Starting find users");
         Session session = HibernateUtil.getSessionFactory().openSession();
         List users = new ArrayList<User>();
         try {
@@ -100,10 +109,12 @@ public class ManageUserImpl implements ManageUser {
             session.getTransaction().commit();
 
         } catch (Exception e) {
+            log.error("Exception throws", new Exception("Exception"));
             if (session.getTransaction() != null) session.getTransaction().rollback();
             e.printStackTrace();
         } finally {
             session.close();
+            log.info("Returning found list of users");
         }
         return users;
     }
