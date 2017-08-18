@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.18, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: db
 -- ------------------------------------------------------
--- Server version	5.7.18-0ubuntu0.16.04.1
+-- Server version	5.7.18-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -26,9 +26,11 @@ CREATE TABLE `wishes` (
   `wishID` int(11) NOT NULL AUTO_INCREMENT,
   `userID` int(11) NOT NULL,
   `wishName` varchar(45) NOT NULL,
-  `link` varchar(145) NOT NULL,
+  `link` varchar(45) NOT NULL,
+  `wishLocalPath` varchar(100) DEFAULT NULL,
+  `imageOriginalName` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`wishID`)
-) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +39,6 @@ CREATE TABLE `wishes` (
 
 LOCK TABLES `wishes` WRITE;
 /*!40000 ALTER TABLE `wishes` DISABLE KEYS */;
-INSERT INTO `wishes` VALUES (97,1,'sthfbdfb','https://translate.google.com/#en/ru/exclude-from'),(98,1,'dgfsdgfn','https://translate.google.com/#en/ru/exclude-from'),(99,1,'rsthasrth','https://translate.google.com/#en/ru/exclude-from'),(100,1,'adhaderh','https://translate.google.com/#en/ru/exclude-from'),(101,1,'zdfbzafb','https://translate.google.com/#en/ru/exclude-from'),(102,1,'sfgdf','https://translate.google.com/#en/ru/exclude-from'),(103,1,'dgfzasdgf','https://translate.google.com/#en/ru/exclude-from'),(104,1,'dgdfg','https://translate.google.com/#en/ru/exclude-from'),(105,1,'fnfgh','https://translate.google.com/#en/ru/exclude-from'),(106,1,'dfrthre','https://translate.google.com/#en/ru/exclude-from'),(107,1,'gnfgnf','https://translate.google.com/#en/ru/exclude-from');
 /*!40000 ALTER TABLE `wishes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-07-20 17:23:53
+-- Dump completed on 2017-08-18 22:22:19
